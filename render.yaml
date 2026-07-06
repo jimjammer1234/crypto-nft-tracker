@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: crypto-nft-tracker-backend
+    runtime: docker
+    dockerfilePath: ./apps/backend/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: API_AUTH_TOKEN
+        sync: false
+      - key: KANO_API_KEY
+        sync: false
+      - key: OPENSEA_API_KEY
+        sync: false
+      - key: SIMPLEHASH_API_KEY
+        sync: false
+      - key: CKPOOL_BTC_ADDRESS
+        value: bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh
+      - key: KANO_USERNAME
+        value: jimjam123123
+      - key: HEROMINERS_PRL_ADDRESS
+        value: prl1pdr8lmxd2rrqpqpc4dq4e62zhqef8rssezl9yajt2l9vq9cs0wmeqw93jnn
+      - key: HEROMINERS_XMR_ADDRESS
+        value: 48Pvv5d3qz6jP5vgCCMqknidYq7pCi6G8eEP3ynTgif2N9YXbZ2Fsoa2bzEgFm6PpaAaaacJxinepZpzjutryyNoHzFgGLY
+      - key: HASHVAULT_XMR_ADDRESS
+        value: 48Pvv5d3qz6jP5vgCCMqknidYq7pCi6G8eEP3ynTgif2N9YXbZ2Fsoa2bzEgFm6PpaAaaacJxinepZpzjutryyNoHzFgGLY
