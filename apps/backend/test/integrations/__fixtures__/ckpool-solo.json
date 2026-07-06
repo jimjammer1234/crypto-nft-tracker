@@ -1,0 +1,87 @@
+{
+    "hashrate1m": "293T",
+    "hashrate5m": "237T",
+    "hashrate1hr": "219T",
+    "hashrate1d": "370T",
+    "hashrate7d": "1.44P",
+    "lastshare": 1783366299,
+    "workers": 5,
+    "shares": 6541698908997,
+    "bestshare": 285148588398.9189,
+    "bestever": 11293373414967,
+    "authorised": 1761432964,
+    "worker": [
+        {
+            "workername": "bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh.MORPHEUS",
+            "hashrate1m": "267T",
+            "hashrate5m": "213T",
+            "hashrate1hr": "193T",
+            "hashrate1d": "196T",
+            "hashrate7d": "190T",
+            "lastshare": 1783366299,
+            "shares": 1007625327067,
+            "bestshare": 56522936412.89886,
+            "bestever": 734612084376
+        },
+        {
+            "workername": "bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh.bmt",
+            "hashrate1m": "7.24T",
+            "hashrate5m": "6.75T",
+            "hashrate1hr": "6.46T",
+            "hashrate1d": "6.51T",
+            "hashrate7d": "6.52T",
+            "lastshare": 1783366288,
+            "shares": 19782006215,
+            "bestshare": 285148588398.9189,
+            "bestever": 285148588398
+        },
+        {
+            "workername": "bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh.nanos2",
+            "hashrate1m": "5.33T",
+            "hashrate5m": "4.59T",
+            "hashrate1hr": "4.57T",
+            "hashrate1d": "4.75T",
+            "hashrate7d": "4.76T",
+            "lastshare": 1783366294,
+            "shares": 10417681763,
+            "bestshare": 6116068172.325087,
+            "bestever": 12018974454
+        },
+        {
+            "workername": "bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh.UltraRPM",
+            "hashrate1m": "2.16T",
+            "hashrate5m": "2.33T",
+            "hashrate1hr": "2.43T",
+            "hashrate1d": "2.6T",
+            "hashrate7d": "2.6T",
+            "lastshare": 1783366295,
+            "shares": 5767660344,
+            "bestshare": 180241349.75737178,
+            "bestever": 9225220788
+        },
+        {
+            "workername": "bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh.ORACLE",
+            "hashrate1m": "0",
+            "hashrate5m": "0",
+            "hashrate1hr": "0",
+            "hashrate1d": "148T",
+            "hashrate7d": "1.22P",
+            "lastshare": 1783204276,
+            "shares": 3635911758688,
+            "bestshare": 106686117607.95999,
+            "bestever": 1190883293094
+        },
+        {
+            "workername": "bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh.SMITH",
+            "hashrate1m": "13.9T",
+            "hashrate5m": "11.9T",
+            "hashrate1hr": "12.1T",
+            "hashrate1d": "12.5T",
+            "hashrate7d": "12.6T",
+            "lastshare": 1783366298,
+            "shares": 10476696282,
+            "bestshare": 96145640705.83511,
+            "bestever": 96145640705
+        }
+    ]
+}

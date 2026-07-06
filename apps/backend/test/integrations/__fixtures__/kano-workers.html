@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html><head><title>KanoPool - Workers</title><meta content='text/html; charset=iso-8859-1' http-equiv='Content-Type'><meta content='IE=edge' http-equiv='X-UA-Compatible'><meta content='width=device-width, initial-scale=1' name='viewport'><script type='text/javascript'>
+function gcn(n){var ans='',d=document.cookie;if(d){var c0=d.indexOf(n+'='),cs=d.indexOf(' '+n+'=');if(c0==0 || cs>0){if(cs>0){c0=cs+1}var c=d.substr(c0).split(';',1);var e=c[0].indexOf('=');if(e>0){ans=c[0].substr(e+1)}}}return ans}
+function scnv(n,v){var d=new Date();d.setTime(d.getTime()+(864*Math.pow(10,8)));document.cookie=n+'='+v+';expires='+d.toUTCString()+';path=/'}
+function ni(e,o){if(e){if(o==0){e.defd=e.style.display;e.style.display='none'}else{e.style.display=e.defd}}}
+function domin(o){var e=document.getElementById('minicb');if(e){if(o==0){e.checked=true}else{e.checked=false}}for(var i=0;i<10;i++){e=document.getElementById('mini'+i);ni(e,o)}}
+function mini(){var hm=gcn('mini');if(hm==''){domin(1)}else{domin(0)}}
+function md(e){var c='';if(e.checked){c='y'}scnv('mini',c);mini()}
+function tim(){var e=document.getElementById('ftr');if(e){var now=new Date(),t=document.createTextNode(now.toLocaleString());e.appendChild(t)}}
+function jst(){var e=document.getElementById('jst');if(e){e.style.visibility='hidden'}}
+
+</script>
+<style type='text/css'>
+input[type=checkbox] {vertical-align:-2px;}
+form {display:inline-block;}
+html, body {height:100%;font-family:Arial, Verdana, sans-serif;font-size:12pt;background-color:#eeffff;text-align:center;background-repeat:no-repeat;background-position:center;}
+.page {min-height:100%;height:auto !important;height:100%;margin:0 auto -50px;position:relative;}
+div.jst {color:red;font-weight:bold;font-size:8;text-align:center;vertical-align:top;}
+div.accwarn {color:red;font-weight:bold;font-size:8;text-align:center;vertical-align:top;}
+div.topd {background-color:#cff;border-color:#cff;border-style:solid;border-width:9px;}
+.topdes {color:blue;text-align:right;}
+.topdesl {color:blue;text-align:left;}
+.topwho {color:black;font-weight:bold;margin-right:8px;}
+.topdat {margin-left:8px;margin-right:24px;color:green;font-weight:bold;}
+span.nb {white-space:pre;}
+span.login {float:right;margin-left:8px;margin-right:24px;}
+span.hil {color:blue;}
+span.user {color:green;}
+span.addr {color:brown;}
+span.hdr {font-weight:bold;text-decoration:underline;}
+span.fld {text-decoration:underline;}
+span.nn {font-weight:bold;color:red;}
+span.warn {color:#f22;font-weight:bold;font-size:110%;}
+span.urg {color:red;font-weight:bold;}
+span.notice {color:blue;font-weight:bold;font-size:120%;}
+span.err {color:red;font-weight:bold;font-size:120%;}
+span.alert {color:red;font-weight:bold;font-size:250%;}
+span.sml {font-size:70%;}
+input.tiny {width:0px;height:0px;margin:0px;padding:0px;outline:none;border:0px;}
+#n42 {margin:0;position:relative;color:#ffffff;background:#0077ee;}
+#n42 a {color:#fff;text-decoration:none;padding:6px;display:block;}
+#n42 td {min-width:100px;float:left;vertical-align:top;padding:0px 2px;}
+#n42 td.navboxr {float:right;}
+#n42 td.nav0 {position:relative;}
+#n42 td.nav {position:relative;}
+#n42 td.ts {border-width:1px;border-color:#0022ee;border-style:solid none none none;}
+#n42 div.sub {left:0px;z-index:42;position:absolute;visibility:hidden;}
+#n42 td.nav0:hover {background:#0099ee;}
+#n42 td.nav:hover {background:#0099ee;}
+#n42 td.nav:hover div.sub {background:#0077ee;visibility:visible;}
+div.ctp {position:relative;height:0px;width:0px;float:left;}
+span.ct {position:absolute;z-index:44;width:auto;height:auto;top:0px;left:0px;padding:2px;background-color:#ffffff;font-family:Arial, Verdana, sans-serif;font-size:8pt;border:1.5px solid #000000;opacity:0.7;text-align:center;visibility:hidden;pointer-events:none;}
+h1 {margin-top:20px;float:middle;font-size:20px;}
+h3 {margin-top:1px;float:middle;font-size:10px;}
+.foot, .push {height:50px;}
+table {border-collapse:collapse;}
+table.tbt > * > tr > * {border:thin solid black;}
+table.tbtp2 > * > tr > * {border:thin solid black;padding:2px;}
+table.tbtp5 > * > tr > * {border:thin solid black;padding:5px;}
+table.tbtp20 > * > tr > * {border:thin solid black;padding:20px;}
+table.tb0 > * > tr > * {border:none;padding:0px;}
+table.tb0p1 > * > tr > * {border:none;padding:1px;}
+table.tb0p2 > * > tr > * {border:none;padding:2px;}
+table.tb0p5 > * > tr > * {border:none;padding:5px;}
+table.tb0p8 > * > tr > * {border:none;padding:8px;}
+table.tb0p10 > * > tr > * {border:none;padding:10px;}
+table.tb0p20 > * > tr > * {border:none;padding:20px;}
+table.tbn > * > tr > * {border:none;}
+.title {background-color:#0cf;border:1px solid black;}
+.even {background-color:#cff;border-bottom:1px solid black;}
+.evenu {background-color:#cff;border-bottom:2px solid red;}
+.odd {background-color:#fff;border-bottom:1px solid black;}
+.oddu {background-color:#fff;border-bottom:2px solid red;}
+.hid {display:none;}
+.dl {text-align:left;padding:2px 8px;position:relative;}
+.dld {text-align:left;padding:2px 8px;font-weight:bold;position:relative;}
+.dlp {text-align:left;padding:2px 8px;color:#501;position:relative;}
+.dlpd {text-align:left;padding:2px 8px;color:#501;font-weight:bold;position:relative;}
+.dr {text-align:right;padding:2px 8px;position:relative;}
+.drd {text-align:right;padding:2px 8px;font-weight:bold;position:relative;}
+.drp {text-align:right;padding:2px 8px;color:#501;position:relative;}
+.drpd {text-align:right;padding:2px 8px;color:#501;font-weight:bold;position:relative;}
+.drt {text-align:right;padding:2px 8px;vertical-align:top;position:relative;}
+.dc {text-align:center;padding:2px 8px;position:relative;}
+.dcd {text-align:center;padding:2px 8px;font-weight:bold;position:relative;}
+.dcp {text-align:center;padding:2px 8px;color:#501;position:relative;}
+.dcpd {text-align:center;padding:2px 8px;color:#501;font-weight:bold;position:relative;}
+.dls {text-align:left;padding:2px 8px;text-decoration:line-through;font-weight:lighter;position:relative;}
+.drs {text-align:right;padding:2px 8px;text-decoration:line-through;font-weight:lighter;position:relative;}
+.dcs {text-align:center;padding:2px 8px;text-decoration:line-through;font-weight:lighter;position:relative;}
+.lw {text-shadow:1px 1px 2px orange;color:orange;}
+.dw {text-shadow:1px 1px 2px red;color:red;}
+.st0 {font-weight:bold;}
+.st1 {color:red;font-weight:bold;}
+.st2 {color:green;font-weight:bold;}
+.st3 {color:blue;font-weight:bold;}
+.fthi {color:red;font-size:7px;}
+.ftlo {color:green;font-size:7px;}
+.ft {color:blue;font-size:7px;}
+.ftl {text-align:left;color:blue;font-size:7px;display:inline-block;width:20%;white-space:nowrap;}
+.ftm {text-align:middle;font-size:10pt;display:inline-block;width:60%;white-space:nowrap;}
+.ftr {text-align:right;color:blue;font-size:7px;display:inline-block;width:20%;white-space:nowrap;}
+.dl .ttxtl, .dld .ttxtl, .dlp .ttxtl, .dlpd .ttxtl, .dls .ttxtl {visibility:hidden;background-color:#07e;font-size:70%;font-weight:bold;color:white;text-align:left;white-space:pre;left:0px;bottom:90%;border-radius:5px;padding:4px 8px;position:absolute;z-index:6;}
+.dl .ttxtl::after, .dld .ttxtl::after, .dlp .ttxtl::after, .dlpd .ttxtl::after, .dls .ttxtl::after {content:'';position:absolute;top:100%;left:20px;margin-left:-5px;border-width:5px;border-style:solid;border-color:#07e transparent transparent transparent;}
+.dl:hover .ttxtl, .dld:hover .ttxtl, .dlp:hover .ttxtl, .dlpd:hover .ttxtl, .dls:hover .ttxtl {visibility:visible;}
+.dr .ttxtr, .drd .ttxtr, .drp .ttxtr, .drpd .ttxtr, .drt .ttxtr, .drs .ttxtr {visibility:hidden;background-color:#07e;font-size:70%;font-weight:bold;color:white;text-align:right;white-space:pre;right:0px;bottom:90%;border-radius:5px;padding:4px 8px;position:absolute;z-index:6;}
+.dr .ttxtr::after, .drd .ttxtr::after, .drp .ttxtr::after, .drpd .ttxtr::after, .drt .ttxtr::after, .drs .ttxtr::after {content:'';position:absolute;top:100%;right:20px;margin-left:-5px;border-width:5px;border-style:solid;border-color:#07e transparent transparent transparent;}
+.dr:hover .ttxtr, .drd:hover .ttxtr, .drp:hover .ttxtr, .drpd:hover .ttxtr, .drt:hover .ttxtr, .drs:hover .ttxtr {visibility:visible;}
+span.side {color:green;font-weight:bold;}
+span.bits {color:brown;font-weight:bold;}
+span.nd {color:red;font-weight:bold;}
+span.oin {font-weight:bold;}
+span.tim {font-weight:bold;}
+span.zero {color:blue;}
+span.sig {color:blue;}
+span.d1 {color:orange;font-weight:bold;}
+span.blv {color:black;}
+span.blp {color:blue;}
+span.blm {color:blue;}
+span.blt {color:black;}
+span.blb {color:orange;}
+span.bln {color:red;}
+
+
+</style>
+<meta name="robots" content="noindex"><script type='text/javascript'>
+function mysp(s){var pad='00000000', l=s.length, r='', rn, n;var i=0;while (i < l){c=s[i];if(c < '0' || c > '9'){r += ''+c;i++}else{rn=c;i++;while (i < l){c=s[i];if(c < '0' || c > '9'){break}rn += ''+c;i++}n=pad.length - rn.length;if(n < 0){n=0}r += ''+pad.substr(0,n);r += ''+rn}}return r}
+function zernum(b,a){var bx=mysp(b[1]);var ax=mysp(a[1]);return bx.localeCompare(ax)}
+function sot(t,s,o){if(t && s>=0){var tb=t.getElementsByTagName('tbody')[0];if(tb){var rs=tb.rows;if(rs && rs.length>0){var all=[], rn, ok=true;for(rn=0;rn<rs.length;rn++){if(rs[rn]){var c=rs[rn].cells[s];if(c){var key=c.getAttribute('data-srt');if(key){all.push([rs[rn],key])}else{all.push([rs[rn],c.innerHTML])}}else{ok=false}}else{ok=false}}if(ok){if(o=='s'){all.sort(function(a,b){return a[1].localeCompare(b[1])})}if(o=='n'){all.sort(function(a,b){return a[1]-b[1]})}if(o=='r'){all.sort(function(a,b){return b[1]-a[1]})}if(o=='d'){all.sort(zernum)}var ch=tb.firstChild;while (ch){tb.removeChild(ch);ch=tb.firstChild}for(rn=0;rn<all.length;rn++){if(rn%2){all[rn][0].className='odd'}else{all[rn][0].className='even'}tb.appendChild(all[rn][0])}}}}}}
+function sott(cn,t){if(t){var sf=t.getAttribute('data-sf');var o=sf.substring(0,1);var s=Number(sf.substring(1));var id=t.id;scnv(cn,id);t.checked=true;sot(t.parentNode.parentNode.parentNode.parentNode.parentNode,s,o)}}
+function sotn(cn,n){var e=document.getElementById(n);if(e){sott(cn,e)}}
+function sotc(cn,d){var ws=gcn(cn);if(ws==''){ws=d}sotn(cn,ws)}
+</script></head><body><div class=page><table width=100% class=tb0><tr><td><center><table width=94% class=tb0><tr><td><noscript><div class=jst id=jst>&nbsp;Javascript isn't enabled. You need to enable javascript to use the KanoPool web site.</div></noscript><div class=topd><table width=100% class=tbn><tr><td><table class=tb0p1><tr><td class=topdes style='background:white'><font color=green><b>O</b></font></td></tr><tr><td class=topdes style='background:white'><font color=green><b>O</b></font></td></tr><tr id=mini0><td class=topdes style='background:white'><font color=green><b>O</b></font></td></tr></table></td><td><table width=100% class=tb0p1><tr><td class=topdes>KanoPool:&nbsp;</td><td class=topdat>&nbsp;16.24PHs/16.49PHs</td></tr><tr><td class=topdes>Shares:&nbsp;</td><td class=topdat>&nbsp;110,196,381,834,901 (80.36%)</td></tr><tr id=mini1><td class=topdes>Invalids:&nbsp;</td><td class=topdat>&nbsp;3.8M (0.21%) &#183; 220.8G (0.20%)</td></tr></table></td><td><table width=100% class=tb0p1><tr><td class=topdes>Last&nbsp;</td><td class=topdesl>Block</td></tr><tr><td class=topdes>Pool:&nbsp;</td><td class=topdat>&nbsp;165d&nbsp;11h&nbsp;24m (PPLNS&nbsp;933336)</td></tr><tr id=mini2><td class=topdes>Network:&nbsp;</td><td class=topdat>&nbsp;13m&nbsp;2s (956949)</td></tr></table></td><td id=mini3><table width=100% class=tb0p1><tr><td class=topdes>Users:&nbsp;</td><td class=topdat>&nbsp;154</td></tr><tr><td class=topdes>Workers:&nbsp;</td><td class=topdat>&nbsp;281</td></tr></table></td><td><span class=login><table class=tb0><tr><td><a href='https://kano.is/index.php?Register=1'>Login<br>Register</a></td></tr></table></span></td></tr></table></div></td></tr><tr><td><table width=100% id=n42 class=tb0><tr><td width=100%><table width=100% class=tb0><tr><td class=navbox><table class=tb0><tr><td class=nav0><a href='/index.php'>Home</a><div class=sub><table width=100% class=tb0></table></div></td></tr></table></td><td class=navbox><table class=tb0><tr><td class=nav onclick=''><a>Pool</a><div class=sub><table width=100% class=tb0><tr><td class=ts><a href='/index.php?k=pblocks' class=as>Blocks</a></td></tr></table></div></td></tr></table></td><td class=navboxr><table class=tb0><tr><td class=nav onclick=''><a>Help</a><div class=sub><table width=100% class=tb0><tr><td class=ts><a href='/index.php?k=pool' class=as>KanoPool</a></td></tr><tr><td class=ts><a href='/index.php?k=support' class=as>Support</a></td></tr><tr><td class=ts><a href='/index.php?k=payout' class=as>Payouts</a></td></tr><tr><td class=ts><a href='/index.php?k=reward' class=as>Rewards</a></td></tr><tr><td class=ts><a href='/index.php?k=soloinfo' class=as>Solo</a></td></tr><tr><td class=ts><a href='/index.php?k=workdiff' class=as>Workers</a></td></tr><tr><td class=ts><a href='/index.php?k=poisson' class=as>Luck</a></td></tr><tr><td class=ts><a href='/index.php?k=bitcoin' class=as>Bitcoin</a></td></tr><tr><td class=ts><a href='/index.php?k=mining' class=as>Mining</a></td></tr><tr><td class=ts><a href='/index.php?k=minedet' class=as>Mining Details</a></td></tr></table></div></td></tr></table></td></tr></table></td></tr></table></td></tr><tr><td><div align=center><h1>Workers&nbsp;(active during the last 7 days)</h1><script type='text/javascript'>function wkt(n,at,i){var t=document.getElementById(n);if(i&&t){var b,cs,j,c,a;b=i.checked;cs=t.getElementsByTagName('td');for(j=0;c=cs[j];j++){a=c.getAttribute(at);if(a){if(b){c.className=a}else{c.className='hid'}}}}}function wktbs(i){wkt('wkt','data-bs',i);wkt('brt','data-bs',i);if(i.checked){scnv('workbest',1)}else{scnv('workbest',0)}}function wki(n,at){var t=document.getElementById(n);if(t){var cs,j,c,a;cs=t.getElementsByTagName('td');for(j=0;c=cs[j];j++){a=c.getAttribute(at);if(a){c.innerHTML=a}}}}function wktsi(i){if(i.checked){wki('wkt','data-i');scnv('worksi',1)}else{wki('wkt','data-n');scnv('worksi',0)}}function wktsr(i){wkt('wkt','data-sr',i);wkt('brt','data-sr',i);if(i.checked){scnv('worksr',1)}else{scnv('worksr',0)}}</script>SI: <input id=sbi type=checkbox checked onclick='wktsi(this)'> &nbsp; &nbsp; SR: <input id=sbr type=checkbox onclick='wktsr(this)'> &nbsp; &nbsp; Show Details for Invalids: <input type=checkbox onclick='wkt("wkt","data-hid",this)'> &nbsp; &nbsp; Show Best: <input id=sbc type=checkbox onclick='wktbs(this)'><br><table id=wkt class=tbn><thead><tr class=title><td class=dld>Worker <span class=nb>Name:<input type=radio name=srt onclick="sott('worksrt',this);" id=srtwrk data-sf=d0></span></td><td class=drd>Work Diff</td><td class=drd><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtlst data-sf=n2>:LShr</span></td><td class=drd>Shares</td><td class=drd><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtdiff data-sf=r4>:Diff</span></td><td class=hid data-sr=dr><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtshrate data-sf=r5>:Share Rate</span></td><td class=hid data-sr=drd>&laquo;Elapsed</td><td class=dr><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtinv data-sf=r7>:Invalid</span></td><td class=hid data-hid=drd><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtstale data-sf=r8>:Stale</span></td><td class=hid data-hid=drd><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtdup data-sf=r9>:Dup</span></td><td class=hid data-hid=drd><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srthi data-sf=r10>:Hi</span></td><td class=hid data-hid=drd><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtreject data-sf=r11>:Rej</span></td><td class=dr><span class=nb><input type=radio name=srt onclick="sott('worksrt',this);" id=srtrate data-sf=r12>:Hash</span> Rate</td><td class=hid data-bs=dld></td><td class=hid data-bs=drd><input type=radio name=srt onclick="sott('worksrt',this);" id=srtbs data-sf=r14>:Best</td><td class=hid data-bs=drd><input type=radio name=srt onclick="sott('worksrt',this);" id=srtbe data-sf=r15>:Best Ever</td></tr></thead><tbody><tr class='even'><td class=dl>jimjam123123.SWITCH</td><td class='dr'>121,508</td><td class='dr' data-srt=0>0s</td><td class=dr data-n=394,641 data-i=394,641>394,641</td><td class=dr data-srt=43970793360 data-n=43,970,793,360 data-i=43.971G>43.971G</td><td class=hid data-sr=dr data-srt=2.1288676559918E+14>212.89THs</td><td class=hid data-sr=dr>13m 2s</td><td class=dr data-srt=0.0012667916048147>0.127%</td><td class=hid data-srt=55772484 data-hid=dr>55,772,484/468=0.13%</td><td class=hid data-srt=0 data-hid=dr>0/0</td><td class=hid data-srt=0 data-hid=dr>0/0</td><td class=hid data-srt=0 data-hid=dr>0/0</td><td class='dr' data-srt=2.0613450337832E+14>206.13THs</td><td class=hid data-bs=dl></td><td class=hid data-srt=554199303943 data-bs=dr><span class=ttxtr>2026&#8209;06&#8209;25 11:09:49+00</span>554.1993G</td><td class=hid data-srt=554199303943 data-bs=dr><span class=ttxtr>2026&#8209;06&#8209;25 11:09:49+00</span>554.1993G</td></tr><tr class='odd'><td class=dl>jimjam123123.nanos3</td><td class='dr'>4,471</td><td class='dr' data-srt=1>1s</td><td class=dr data-n=10,693,213 data-i=10.693M>10.693M</td><td class=dr data-srt=43458140393 data-n=43,458,140,393 data-i=43.458G>43.458G</td><td class=hid data-sr=dr data-srt=7096686505805.9>7.10THs</td><td class=hid data-sr=dr>13m 2s</td><td class=dr data-srt=0.0013978051179876>0.140%</td><td class=hid data-srt=60722632 data-hid=dr>60,722,632/14,910=0.14%</td><td class=hid data-srt=8148 data-hid=dr>8,148/2</td><td class=hid data-srt=52156 data-hid=dr>52,156/118</td><td class=hid data-srt=108409 data-hid=dr>108,409/30</td><td class='dr' data-srt=6511478994308>6.51THs</td><td class=hid data-bs=dl></td><td class=hid data-srt=100129429142 data-bs=dr><span class=ttxtr>2025&#8209;12&#8209;08 21:30:37+00</span>100.1294G</td><td class=hid data-srt=100129429142 data-bs=dr><span class=ttxtr>2025&#8209;12&#8209;08 21:30:37+00</span>100.1294G</td></tr><tr class='even'><td class=dl>jimjam123123.nanos</td><td class='dr'>4,250</td><td class='dr' data-srt=7>7s</td><td class=dr data-n=11,033,428 data-i=11.033M>11.033M</td><td class=dr data-srt=45237348144 data-n=45,237,348,144 data-i=45.237G>45.237G</td><td class=hid data-sr=dr data-srt=6442450944000>6.44THs</td><td class=hid data-sr=dr>13m 2s</td><td class=dr data-srt=0.0013762918432453>0.138%</td><td class=hid data-srt=62338969 data-hid=dr>62,338,969/15,215=0.14%</td><td class=hid data-srt=0 data-hid=dr>0/0</td><td class=hid data-srt=241878 data-hid=dr>241,878/109</td><td class=hid data-srt=6630 data-hid=dr>6,630/15</td><td class='dr' data-srt=6088544169589>6.09THs</td><td class=hid data-bs=dl></td><td class=hid data-srt=17588982449 data-bs=dr><span class=ttxtr>2025&#8209;11&#8209;23 10:46:06+00</span>17.5890G</td><td class=hid data-srt=17588982449 data-bs=dr><span class=ttxtr>2025&#8209;11&#8209;23 10:46:06+00</span>17.5890G</td></tr><tr class='odd'><td class=dl>jimjam123123.MORPHEUS</td><td class='dr lw'>442</td><td class='dr dw' data-srt=99417>1.1days</td><td class=dr data-n=13,781 data-i=13,781>13,781</td><td class=dr data-srt=935158183 data-n=935,158,183 data-i=935.158M>935.158M</td><td class=hid data-sr=dr data-srt=0>0GHs</td><td class=hid data-sr=dr>13m 2s</td><td class=dr data-srt=0.00074479684066084>0.074%</td><td class=hid data-srt=697022 data-hid=dr>697,022/333=0.07%</td><td class=hid data-srt=0 data-hid=dr>0/0</td><td class=hid data-srt=267410 data-hid=dr>267,410/605</td><td class=hid data-srt=0 data-hid=dr>0/0</td><td class='dr dw' data-srt=0>0GHs</td><td class=hid data-bs=dl></td><td class=hid data-srt=500012849 data-bs=dr><span class=ttxtr>2026&#8209;03&#8209;14 03:19:42+00</span>500.0128M</td><td class=hid data-srt=500012849 data-bs=dr><span class=ttxtr>2026&#8209;03&#8209;14 03:19:42+00</span>500.0128M</td></tr></tbody><tfoot><tr class=even><td class=dl colspan=3>Total: 4 (3 active workers)</td><td class=dr data-n=22,135,063 data-i=22.135M>22.135M</td><td class=dr data-n=133,601,440,080 data-i=133.601G>133.601G</td><td class=hid data-sr=dr>226.43THs</td><td class=hid data-sr=drd>&nbsp;</td><td class=dr>0.134%</td><td class=hid colspan=4 data-hid=dr>&nbsp;</td><td class=dr>218.73THs</td><td class=hid colspan=3 data-bs=dr>&nbsp;</td></tr></tfoot></table><script type='text/javascript'>sotc('worksrt','srtrate');</script></div></td></tr></table></center></td></tr></table><div class=push></div></div><div class=foot><br><span class=ftl>6th Jul 19:13:12 UTC&nbsp;</span><span class=ftm>Copyright &copy; Kano 2014-2026&nbsp;<span class=ft>&nbsp;</span></span><span class=ftr id=ftr>&nbsp;</span></div><script type='text/javascript'>jst();tim();mini();</script></body></html>
