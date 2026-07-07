@@ -25,3 +25,22 @@ export async function fetchHashvaultStats(address: string): Promise<HashvaultSta
   }
   return (await res.json()) as HashvaultStatsRaw;
 }
+
+export interface HashvaultWorkerRaw {
+  name: string;
+  hashRate: number;
+  offline: boolean;
+}
+
+export interface HashvaultWorkersRaw {
+  solo: HashvaultWorkerRaw[];
+  collective: HashvaultWorkerRaw[];
+}
+
+export async function fetchHashvaultWorkers(address: string): Promise<HashvaultWorkersRaw> {
+  const res = await fetch(`https://api.hashvault.pro/v3/monero/wallet/${address}/workers`);
+  if (!res.ok) {
+    throw new Error(`hashvault workers request failed: ${res.status} ${res.statusText}`);
+  }
+  return (await res.json()) as HashvaultWorkersRaw;
+}

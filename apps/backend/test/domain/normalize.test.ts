@@ -3,11 +3,12 @@ import { normalizeCkpool, normalizeHeroMiners, normalizeHashvault, normalizeKano
 import { parseKanoWorkersHtml } from "../../src/integrations/mining/kanoClient.js";
 import type { CkpoolStatsRaw } from "../../src/integrations/mining/ckpoolClient.js";
 import type { HeroMinersStatsRaw } from "../../src/integrations/mining/heroMinersClient.js";
-import type { HashvaultStatsRaw } from "../../src/integrations/mining/hashvaultClient.js";
+import type { HashvaultStatsRaw, HashvaultWorkersRaw } from "../../src/integrations/mining/hashvaultClient.js";
 import ckpoolFixture from "../integrations/__fixtures__/ckpool-solo.json" with { type: "json" };
 import heroMinersPrlFixture from "../integrations/__fixtures__/herominers-prl.json" with { type: "json" };
 import heroMinersXmrFixture from "../integrations/__fixtures__/herominers-xmr.json" with { type: "json" };
 import hashvaultFixture from "../integrations/__fixtures__/hashvault-xmr.json" with { type: "json" };
+import hashvaultWorkersFixture from "../integrations/__fixtures__/hashvault-workers.json" with { type: "json" };
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -47,6 +48,8 @@ describe("normalizeHeroMiners", () => {
     expect(snapshot.bestDifficulty).toBeNull();
     expect(snapshot.workerBests).toEqual([]);
     expect(snapshot.blocksFound).toBe(heroMinersPrlFixture.stats.blocksFoundSolo);
+    const lastChartEntry = heroMinersPrlFixture.charts.hashrate.at(-1)!;
+    expect(snapshot.workersOnline).toBe(lastChartEntry[2]);
   });
 
   it("normalizes a real XMR herominers response", () => {
@@ -63,6 +66,17 @@ describe("normalizeHashvault", () => {
     expect(snapshot.balance).toBe(hashvaultFixture.revenue.confirmedBalance);
     expect(snapshot.lastShareAt).toBe(new Date(hashvaultFixture.solo.lastShare).toISOString());
     expect(snapshot.blocksFound).toBe(hashvaultFixture.solo.foundBlocks);
+    expect(snapshot.workersOnline).toBeNull();
+  });
+
+  it("counts non-offline solo workers when a workers response is provided", () => {
+    const snapshot = normalizeHashvault(
+      "source-hv",
+      hashvaultFixture as HashvaultStatsRaw,
+      hashvaultWorkersFixture as HashvaultWorkersRaw
+    );
+    const expectedOnline = hashvaultWorkersFixture.solo.filter((w) => !w.offline).length;
+    expect(snapshot.workersOnline).toBe(expectedOnline);
   });
 });
 

@@ -1,7 +1,7 @@
 import type { MiningSnapshot } from "@crypto-nft-tracker/shared-types";
 import type { CkpoolStatsRaw } from "../../integrations/mining/ckpoolClient.js";
 import type { HeroMinersStatsRaw } from "../../integrations/mining/heroMinersClient.js";
-import type { HashvaultStatsRaw } from "../../integrations/mining/hashvaultClient.js";
+import type { HashvaultStatsRaw, HashvaultWorkersRaw } from "../../integrations/mining/hashvaultClient.js";
 import type { KanoParsedStats } from "../../integrations/mining/kanoClient.js";
 import { parseHashrateString } from "../../utils/hashrate.js";
 
@@ -32,6 +32,11 @@ export function normalizeCkpool(sourceId: string, raw: CkpoolStatsRaw): MiningSn
  */
 export function normalizeHeroMiners(sourceId: string, raw: HeroMinersStatsRaw): MiningSnapshot {
   const s = raw.stats;
+  // The stats_address endpoint has no dedicated worker-count field, but each entry in the
+  // hashrate chart is [timestamp, hashrate, workerCount] — the most recent one gives us a live count.
+  const hashrateChart = raw.charts?.hashrate ?? [];
+  const workersOnline = hashrateChart.length > 0 ? hashrateChart[hashrateChart.length - 1][2] : null;
+
   return {
     sourceId,
     polledAt: new Date().toISOString(),
@@ -39,7 +44,7 @@ export function normalizeHeroMiners(sourceId: string, raw: HeroMinersStatsRaw): 
     hashrate5m: s.hashrate_1h ?? null,
     hashrate1hr: s.hashrate_1h ?? null,
     hashrate1d: s.hashrate_24h ?? null,
-    workersOnline: null,
+    workersOnline,
     sharesTotal: s.solo_shares_good ?? null,
     // Atomic/smallest-unit balance; per-coin decimal conversion to a display amount happens in the UI layer.
     balance: s.balance ? Number(s.balance) : null,
@@ -51,8 +56,10 @@ export function normalizeHeroMiners(sourceId: string, raw: HeroMinersStatsRaw): 
   };
 }
 
-export function normalizeHashvault(sourceId: string, raw: HashvaultStatsRaw): MiningSnapshot {
+export function normalizeHashvault(sourceId: string, raw: HashvaultStatsRaw, workers?: HashvaultWorkersRaw): MiningSnapshot {
   const solo = raw.solo;
+  const workersOnline = workers ? workers.solo.filter((w) => !w.offline).length : null;
+
   return {
     sourceId,
     polledAt: new Date().toISOString(),
@@ -60,7 +67,7 @@ export function normalizeHashvault(sourceId: string, raw: HashvaultStatsRaw): Mi
     hashrate5m: solo.avg3hashRate ?? null,
     hashrate1hr: solo.avg1hashRate ?? null,
     hashrate1d: solo.avg24hashRate ?? null,
-    workersOnline: null,
+    workersOnline,
     sharesTotal: solo.validShares ?? null,
     // Atomic piconero units (1 XMR = 1e12); display conversion happens in the UI layer.
     balance: raw.revenue?.confirmedBalance ?? null,
