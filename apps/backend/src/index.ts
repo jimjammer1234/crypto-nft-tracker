@@ -8,7 +8,9 @@ import { logger } from "./utils/logger.js";
 const app = await buildServer();
 
 startScheduler({
-  onSnapshot: (snapshot) => broadcast({ type: "mining.snapshot", data: snapshot }),
+  onMiningSnapshot: (snapshot) => broadcast({ type: "mining.snapshot", data: snapshot }),
+  onNftCollectionSnapshot: (snapshot) => broadcast({ type: "nft.collection_snapshot", data: snapshot }),
+  onNftListing: (listing) => broadcast({ type: "nft.listing", data: listing }),
   onAlert: (alert) => broadcast({ type: "alert.fired", data: alert }),
 });
 

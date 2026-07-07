@@ -1,0 +1,22 @@
+{
+  "total" : {
+    "volume" : 1577698.6079355793,
+    "sales" : 57045,
+    "num_owners" : 5625,
+    "floor_price" : 9.2899999999999,
+    "floor_price_symbol" : "ETH"
+  },
+  "intervals" : [ {
+    "interval" : "one_day",
+    "volume" : 75.35000000000001,
+    "sales" : 5
+  }, {
+    "interval" : "seven_day",
+    "volume" : 426.4328,
+    "sales" : 38
+  }, {
+    "interval" : "thirty_day",
+    "volume" : 2364.8497899999993,
+    "sales" : 232
+  } ]
+}

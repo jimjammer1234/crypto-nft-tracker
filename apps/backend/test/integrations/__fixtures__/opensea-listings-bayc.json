@@ -1,0 +1,172 @@
+{
+  "listings" : [ {
+    "order_hash" : "0x3584862eb95a15720caac8ecc19f9930f62d4b2cacb9b84ec5eaff6b8c9274e9",
+    "chain" : "ethereum",
+    "protocol_data" : {
+      "parameters" : {
+        "offerer" : "0xff53e1da7b67ae676d7742f858aab5bd4bc937f6",
+        "offer" : [ {
+          "itemType" : 2,
+          "token" : "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+          "identifierOrCriteria" : "5495",
+          "startAmount" : "1",
+          "endAmount" : "1"
+        } ],
+        "consideration" : [ {
+          "itemType" : 0,
+          "token" : "0x0000000000000000000000000000000000000000",
+          "identifierOrCriteria" : "0",
+          "startAmount" : "9599931000000000000",
+          "endAmount" : "9599931000000000000",
+          "recipient" : "0xff53e1da7b67ae676d7742f858aab5bd4bc937f6"
+        }, {
+          "itemType" : 0,
+          "token" : "0x0000000000000000000000000000000000000000",
+          "identifierOrCriteria" : "0",
+          "startAmount" : "96969000000000000",
+          "endAmount" : "96969000000000000",
+          "recipient" : "0x0000a26b00c1f0df003000390027140000faa719"
+        } ],
+        "startTime" : "1782786100",
+        "endTime" : "1783390900",
+        "orderType" : 0,
+        "zone" : "0x0000000000000000000000000000000000000000",
+        "zoneHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "salt" : "0x9b6f067143a79d02207288e31b71c71a4d5a5e1ba52209e231a8bce8845c1ca6",
+        "conduitKey" : "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+        "totalOriginalConsiderationItems" : 2,
+        "counter" : "0"
+      },
+      "signature" : null
+    },
+    "protocol_address" : "0x0000000000000068f116a894984e2db1123eb395",
+    "asset" : {
+      "identifier" : "5495",
+      "contract" : "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+    },
+    "remaining_quantity" : 1,
+    "order_created_at" : 1782786103,
+    "price" : {
+      "current" : {
+        "currency" : "ETH",
+        "decimals" : 18,
+        "value" : "9696900000000000000"
+      }
+    },
+    "type" : "basic",
+    "status" : "ACTIVE"
+  }, {
+    "order_hash" : "0x71ce61bc40adb05c2fa20892947e248f7f2082f2752814c3e7c15ee563d7e131",
+    "chain" : "ethereum",
+    "protocol_data" : {
+      "parameters" : {
+        "offerer" : "0xd00f1e6dbdfe80e8725a376c82d8a40e203e2048",
+        "offer" : [ {
+          "itemType" : 2,
+          "token" : "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+          "identifierOrCriteria" : "7377",
+          "startAmount" : "1",
+          "endAmount" : "1"
+        } ],
+        "consideration" : [ {
+          "itemType" : 0,
+          "token" : "0x0000000000000000000000000000000000000000",
+          "identifierOrCriteria" : "0",
+          "startAmount" : "9650025000000000000",
+          "endAmount" : "9650025000000000000",
+          "recipient" : "0xd00f1e6dbdfe80e8725a376c82d8a40e203e2048"
+        }, {
+          "itemType" : 0,
+          "token" : "0x0000000000000000000000000000000000000000",
+          "identifierOrCriteria" : "0",
+          "startAmount" : "97475000000000000",
+          "endAmount" : "97475000000000000",
+          "recipient" : "0x0000a26b00c1f0df003000390027140000faa719"
+        } ],
+        "startTime" : "1783367729",
+        "endTime" : "1783972528",
+        "orderType" : 0,
+        "zone" : "0x0000000000000000000000000000000000000000",
+        "zoneHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "salt" : "0xdf72617168f1f3ffac2be2a8f69530526b5cf24ecd1bc4d1fed9a33a6f7f353e",
+        "conduitKey" : "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+        "totalOriginalConsiderationItems" : 2,
+        "counter" : "263517376839982284836233890837323111933"
+      },
+      "signature" : null
+    },
+    "protocol_address" : "0x0000000000000068f116a894984e2db1123eb395",
+    "asset" : {
+      "identifier" : "7377",
+      "contract" : "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+    },
+    "remaining_quantity" : 1,
+    "order_created_at" : 1783367736,
+    "price" : {
+      "current" : {
+        "currency" : "ETH",
+        "decimals" : 18,
+        "value" : "9747500000000000000"
+      }
+    },
+    "type" : "basic",
+    "status" : "ACTIVE"
+  }, {
+    "order_hash" : "0xed5a10c51035e8879c1cd75c50a35b0351656e4e995a2f137afb7ce5d4c1cedb",
+    "chain" : "ethereum",
+    "protocol_data" : {
+      "parameters" : {
+        "offerer" : "0xff53e1da7b67ae676d7742f858aab5bd4bc937f6",
+        "offer" : [ {
+          "itemType" : 2,
+          "token" : "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+          "identifierOrCriteria" : "5495",
+          "startAmount" : "1",
+          "endAmount" : "1"
+        } ],
+        "consideration" : [ {
+          "itemType" : 0,
+          "token" : "0x0000000000000000000000000000000000000000",
+          "identifierOrCriteria" : "0",
+          "startAmount" : "9669924000000000000",
+          "endAmount" : "9669924000000000000",
+          "recipient" : "0xff53e1da7b67ae676d7742f858aab5bd4bc937f6"
+        }, {
+          "itemType" : 0,
+          "token" : "0x0000000000000000000000000000000000000000",
+          "identifierOrCriteria" : "0",
+          "startAmount" : "97676000000000000",
+          "endAmount" : "97676000000000000",
+          "recipient" : "0x0000a26b00c1f0df003000390027140000faa719"
+        } ],
+        "startTime" : "1783045388",
+        "endTime" : "1783650188",
+        "orderType" : 0,
+        "zone" : "0x0000000000000000000000000000000000000000",
+        "zoneHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "salt" : "0xb5da4cab59ed3845e234d315eefb70a910138350407b1bc32e1b2cfabd7becde",
+        "conduitKey" : "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+        "totalOriginalConsiderationItems" : 2,
+        "counter" : "0"
+      },
+      "signature" : null
+    },
+    "protocol_address" : "0x0000000000000068f116a894984e2db1123eb395",
+    "asset" : {
+      "identifier" : "5495",
+      "contract" : "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+    },
+    "remaining_quantity" : 1,
+    "order_created_at" : 1783045392,
+    "price" : {
+      "current" : {
+        "currency" : "ETH",
+        "decimals" : 18,
+        "value" : "9767600000000000000"
+      }
+    },
+    "type" : "basic",
+    "status" : "ACTIVE"
+  } ],
+  "next" : "WzkuNzY3NiwiMjAyNi0wNy0wM1QwMjoyMzoxMi4xNTJaIiwiYjU0ZjA5ZTAtNmVmOS0zMTZlLTgwOWMtYWQ0YjhiZWNkODhlIl0"
+}

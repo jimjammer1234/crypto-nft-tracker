@@ -1,0 +1,126 @@
+{
+  "nfts" : [ {
+    "identifier" : "15637",
+    "collection" : "mutant-ape-yacht-club",
+    "contract" : "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
+    "token_standard" : "erc721",
+    "name" : "",
+    "description" : "",
+    "image_url" : "https://i2c.seadn.io/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/9f68bd450ad6a2f8c269e199a14c16/549f68bd450ad6a2f8c269e199a14c16.png",
+    "display_image_url" : "https://i2c.seadn.io/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/9f68bd450ad6a2f8c269e199a14c16/549f68bd450ad6a2f8c269e199a14c16.png",
+    "display_animation_url" : null,
+    "metadata_url" : "https://boredapeyachtclub.com/api/mutants/15637",
+    "opensea_url" : "https://opensea.io/assets/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/15637",
+    "updated_at" : "2026-07-07T00:52:36.643536",
+    "is_disabled" : false,
+    "is_nsfw" : false,
+    "original_image_url" : "ipfs://QmSxdYoPwNGnHD5a5cKhiUMerGKZiK3vSpSaDsVAmYZWHe",
+    "original_animation_url" : null,
+    "traits" : [ {
+      "trait_type" : "Fur",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Pink"
+    }, {
+      "trait_type" : "Hat",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Halo"
+    }, {
+      "trait_type" : "Eyes",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 X Eyes"
+    }, {
+      "trait_type" : "Mouth",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Bored Unshaven"
+    }, {
+      "trait_type" : "Background",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 New Punk Blue"
+    } ],
+    "estimated_value_usd" : null
+  }, {
+    "identifier" : "2367",
+    "collection" : "mutant-ape-yacht-club",
+    "contract" : "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
+    "token_standard" : "erc721",
+    "name" : "",
+    "description" : "",
+    "image_url" : "https://i2c.seadn.io/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/a566a8c21b2b76de3ba6124a621742/65a566a8c21b2b76de3ba6124a621742.png",
+    "display_image_url" : "https://i2c.seadn.io/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/a566a8c21b2b76de3ba6124a621742/65a566a8c21b2b76de3ba6124a621742.png",
+    "display_animation_url" : null,
+    "metadata_url" : "https://boredapeyachtclub.com/api/mutants/2367",
+    "opensea_url" : "https://opensea.io/assets/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/2367",
+    "updated_at" : "2026-07-07T00:52:36.643551",
+    "is_disabled" : false,
+    "is_nsfw" : false,
+    "original_image_url" : "ipfs://QmXVc7nu2zG1RvCMxPdEuVZ9QYJYTPrrVswVcd5P9rSAt3",
+    "original_animation_url" : null,
+    "traits" : [ {
+      "trait_type" : "Fur",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Red"
+    }, {
+      "trait_type" : "Eyes",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Sunglasses"
+    }, {
+      "trait_type" : "Mouth",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Bored Dagger"
+    }, {
+      "trait_type" : "Background",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M2 Purple"
+    } ],
+    "estimated_value_usd" : null
+  }, {
+    "identifier" : "15264",
+    "collection" : "mutant-ape-yacht-club",
+    "contract" : "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
+    "token_standard" : "erc721",
+    "name" : "",
+    "description" : "",
+    "image_url" : "https://i2c.seadn.io/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/4d83079f417928c1f73368b5f851c8/c94d83079f417928c1f73368b5f851c8.png",
+    "display_image_url" : "https://i2c.seadn.io/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/4d83079f417928c1f73368b5f851c8/c94d83079f417928c1f73368b5f851c8.png",
+    "display_animation_url" : null,
+    "metadata_url" : "https://boredapeyachtclub.com/api/mutants/15264",
+    "opensea_url" : "https://opensea.io/assets/ethereum/0x60e4d786628fea6478f785a6d7e704777c86a7c6/15264",
+    "updated_at" : "2026-07-07T00:52:36.643562",
+    "is_disabled" : false,
+    "is_nsfw" : false,
+    "original_image_url" : "ipfs://QmPdPAcyNM5zz1Xbv1rUWw5TsWedKvUg68dTUEbSPvqrU5",
+    "original_animation_url" : null,
+    "traits" : [ {
+      "trait_type" : "Fur",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M1 Black"
+    }, {
+      "trait_type" : "Eyes",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M1 Closed"
+    }, {
+      "trait_type" : "Mouth",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M1 Bored"
+    }, {
+      "trait_type" : "Background",
+      "display_type" : null,
+      "max_value" : null,
+      "value" : "M1 Gray"
+    } ],
+    "estimated_value_usd" : null
+  } ],
+  "next" : "WyIyMDI2LTA2LTE0VDIyOjM3OjExWiIsIjQ3MDdlNWUyLWM4ZjgtMzU5YS1iYzA4LTc1MWQ2MDk5NzJlYSJd"
+}

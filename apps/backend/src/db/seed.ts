@@ -2,6 +2,7 @@ import "../config/loadEnv.js";
 import { and, eq } from "drizzle-orm";
 import { db, queryClient } from "./client.js";
 import { miningSources } from "./schema/mining.js";
+import { nftCollections, nftWallets } from "./schema/nft.js";
 import { alertRules } from "./schema/alerts.js";
 import { env } from "../config/env.js";
 
@@ -91,36 +92,75 @@ async function seedMiningSources() {
       console.log(`Seeded mining source: ${seed.label}`);
     }
 
-    await seedDefaultAlertRules(sourceId, seed.tracksBalance);
+    const rules: Array<{ kind: string; config: Record<string, unknown> }> = [
+      { kind: "rig_offline", config: { staleMinutes: 30 } },
+      { kind: "hashrate_drop", config: { dropPercent: 30 } },
+    ];
+    if (seed.tracksBalance) rules.push({ kind: "payout_received", config: {} });
+    await seedAlertRules("mining_source", sourceId, rules);
   }
 }
 
-async function seedDefaultAlertRules(sourceId: string, tracksBalance: boolean) {
-  const existingRules = await db.select().from(alertRules).where(eq(alertRules.targetId, sourceId));
+const NFT_COLLECTION_SEEDS = [
+  { slug: "boredapeyachtclub", name: "Bored Ape Yacht Club" },
+  { slug: "azuki", name: "Azuki" },
+  { slug: "pudgypenguins", name: "Pudgy Penguins" },
+  { slug: "azuki-elementals", name: "Azuki Elementals" },
+];
+
+const NFT_WALLET_SEEDS = [
+  { address: "0xBa93cA89F754D7FDE479678a1d7d53891fad6151" },
+  { address: "0x9a19b22F0e19597401CF548c1843A8E9a1DB8792" },
+  { address: "0x07C669Fc7bC04E015fE8d53425b6f32f67a38eEa" },
+];
+
+async function seedNftSources() {
+  for (const seed of NFT_COLLECTION_SEEDS) {
+    const [existing] = await db.select().from(nftCollections).where(eq(nftCollections.slug, seed.slug));
+    const collectionId = existing
+      ? existing.id
+      : (await db.insert(nftCollections).values({ slug: seed.slug, name: seed.name }).returning())[0].id;
+
+    if (!existing) console.log(`Seeded NFT collection: ${seed.name}`);
+
+    await seedAlertRules("nft_collection", collectionId, [
+      { kind: "new_listing", config: {} },
+      { kind: "floor_threshold", config: { direction: "below", value: 0 } }, // disabled by default (0 ETH never triggers); edit via alert_rules to set a real threshold
+    ]);
+  }
+
+  for (const seed of NFT_WALLET_SEEDS) {
+    const [existing] = await db.select().from(nftWallets).where(eq(nftWallets.address, seed.address));
+    const walletId = existing
+      ? existing.id
+      : (await db.insert(nftWallets).values({ address: seed.address }).returning())[0].id;
+
+    if (!existing) console.log(`Seeded NFT wallet: ${seed.address}`);
+
+    await seedAlertRules("nft_wallet", walletId, [{ kind: "portfolio_change", config: { changePercent: 15 } }]);
+  }
+}
+
+async function seedAlertRules(
+  targetType: "mining_source" | "nft_collection" | "nft_wallet",
+  targetId: string,
+  rules: Array<{ kind: string; config: Record<string, unknown> }>
+) {
+  const existingRules = await db.select().from(alertRules).where(eq(alertRules.targetId, targetId));
   const existingKinds = new Set(existingRules.map((r) => r.kind));
-
-  const toInsert: Array<{ kind: string; config: Record<string, unknown> }> = [];
-  if (!existingKinds.has("rig_offline")) {
-    toInsert.push({ kind: "rig_offline", config: { staleMinutes: 30 } });
-  }
-  if (!existingKinds.has("hashrate_drop")) {
-    toInsert.push({ kind: "hashrate_drop", config: { dropPercent: 30 } });
-  }
-  if (tracksBalance && !existingKinds.has("payout_received")) {
-    toInsert.push({ kind: "payout_received", config: {} });
-  }
-
+  const toInsert = rules.filter((r) => !existingKinds.has(r.kind));
   if (toInsert.length === 0) return;
 
   await db.insert(alertRules).values(
     toInsert.map((rule) => ({
       kind: rule.kind,
-      targetType: "mining_source",
-      targetId: sourceId,
+      targetType,
+      targetId,
       config: rule.config,
     }))
   );
 }
 
 await seedMiningSources();
+await seedNftSources();
 await queryClient.end();

@@ -1,6 +1,8 @@
-import type { MiningSnapshot, AlertEvent } from "@crypto-nft-tracker/shared-types";
+import type { MiningSnapshot, NftCollectionSnapshot, NftListingEvent, AlertEvent } from "@crypto-nft-tracker/shared-types";
 
 export interface Notifiers {
-  onSnapshot: (snapshot: MiningSnapshot) => void;
+  onMiningSnapshot: (snapshot: MiningSnapshot) => void;
+  onNftCollectionSnapshot: (snapshot: NftCollectionSnapshot) => void;
+  onNftListing: (listing: NftListingEvent) => void;
   onAlert: (alert: AlertEvent) => void;
 }

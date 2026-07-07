@@ -51,7 +51,7 @@ export async function recordMiningSnapshot(
     rawPayload: rawPayload as object,
   });
 
-  notifiers?.onSnapshot(snapshot);
+  notifiers?.onMiningSnapshot(snapshot);
 
   const rules = await db
     .select()
