@@ -43,6 +43,10 @@ export const nftListingEvents = pgTable("nft_listing_events", {
   currency: text("currency").default("ETH"),
   seller: text("seller"),
   listedAt: timestamp("listed_at", { withTimezone: true }).notNull(),
+  // True when this token relisted <=20 min after its own previous listing — a common bot/wash-listing
+  // pattern (bumping search rank or farming rewards). Still recorded so gap-detection stays accurate
+  // across repeated fast relists, but excluded from alerts and from what's surfaced in the UI.
+  likelyBot: boolean("likely_bot").notNull().default(false),
   detectedAt: timestamp("detected_at", { withTimezone: true }).notNull().defaultNow(),
   rawPayload: jsonb("raw_payload"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

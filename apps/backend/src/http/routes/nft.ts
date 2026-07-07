@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { db } from "../../db/client.js";
 import { nftCollections, nftCollectionSnapshots, nftListingEvents, nftWallets, nftWalletSnapshots } from "../../db/schema/nft.js";
 
@@ -23,10 +23,12 @@ export async function registerNftRoutes(app: FastifyInstance) {
     "/api/nft/collections/:id/listings",
     async (request) => {
       const limit = Math.min(Number(request.query.limit ?? 50), 500);
+      // Bot/wash relistings are still recorded (for accurate gap-detection) but excluded here by
+      // default, since they're not genuine listings a user would want to see or act on.
       return db
         .select()
         .from(nftListingEvents)
-        .where(eq(nftListingEvents.collectionId, request.params.id))
+        .where(and(eq(nftListingEvents.collectionId, request.params.id), eq(nftListingEvents.likelyBot, false)))
         .orderBy(desc(nftListingEvents.listedAt))
         .limit(limit);
     }

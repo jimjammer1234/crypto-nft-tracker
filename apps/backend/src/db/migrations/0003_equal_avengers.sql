@@ -1,0 +1,1 @@
+ALTER TABLE "nft_listing_events" ADD COLUMN "likely_bot" boolean DEFAULT false NOT NULL;

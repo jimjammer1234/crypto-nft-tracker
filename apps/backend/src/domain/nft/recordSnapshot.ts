@@ -86,8 +86,34 @@ export async function recordCollectionSnapshot(collectionId: string, snapshot: N
   }
 }
 
+const BOT_RELIST_THRESHOLD_MS = 20 * 60 * 1000;
+
+/** True when this token's previous listing (if any) ended less than 20 minutes before this one —
+ * relisting that fast is a common bot pattern (bumping search rank, farming marketplace rewards)
+ * rather than a genuine new listing. Compares against the most recent row regardless of its own
+ * likelyBot flag, so a bot relisting every 15 minutes for hours keeps getting caught, not just once. */
+async function isBotRelist(collectionId: string, marketplace: string, tokenId: string, listedAt: Date): Promise<boolean> {
+  const [previous] = await db
+    .select()
+    .from(nftListingEvents)
+    .where(
+      and(
+        eq(nftListingEvents.collectionId, collectionId),
+        eq(nftListingEvents.marketplace, marketplace),
+        eq(nftListingEvents.tokenId, tokenId)
+      )
+    )
+    .orderBy(desc(nftListingEvents.listedAt))
+    .limit(1);
+
+  if (!previous) return false;
+  const gapMs = listedAt.getTime() - previous.listedAt.getTime();
+  return gapMs >= 0 && gapMs <= BOT_RELIST_THRESHOLD_MS;
+}
+
 /** Inserts only genuinely new listings (deduped by collection+marketplace+token+listedAt) and fires
- * new_listing alerts for each one actually inserted. */
+ * new_listing alerts for each one actually inserted — except listings flagged as likely bot activity
+ * (see isBotRelist), which are still recorded but silently, with no alert. */
 export async function recordListings(collectionId: string, listings: NftListingEvent[], notifiers?: Notifiers) {
   if (listings.length === 0) return;
 
@@ -95,6 +121,9 @@ export async function recordListings(collectionId: string, listings: NftListingE
   const newListingRule = rules.find((r) => r.kind === "new_listing");
 
   for (const listing of listings) {
+    const listedAt = new Date(listing.listedAt);
+    const likelyBot = await isBotRelist(collectionId, listing.marketplace, listing.tokenId, listedAt);
+
     const inserted = await db
       .insert(nftListingEvents)
       .values({
@@ -104,12 +133,17 @@ export async function recordListings(collectionId: string, listings: NftListingE
         price: listing.price?.toString(),
         currency: listing.currency,
         seller: listing.seller,
-        listedAt: new Date(listing.listedAt),
+        listedAt,
+        likelyBot,
       })
       .onConflictDoNothing()
       .returning();
 
     if (inserted.length === 0) continue; // already seen this listing
+    if (likelyBot) {
+      logger.debug({ collectionId, tokenId: listing.tokenId }, "suppressing likely bot relisting");
+      continue;
+    }
 
     notifiers?.onNftListing(listing);
 
