@@ -1,18 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import { Sidebar } from "./components/layout/Sidebar.js";
-import { Dashboard } from "./routes/Dashboard.js";
-import { Mining } from "./routes/Mining.js";
-import { Nft } from "./routes/Nft.js";
+import { TopBar } from "./components/layout/TopBar.js";
+import { Home } from "./routes/Home.js";
 import { Settings } from "./routes/Settings.js";
 
 export default function App() {
   return (
-    <div className="flex h-screen w-screen bg-background">
-      <Sidebar />
+    <div className="flex h-screen w-screen flex-col bg-background">
+      <TopBar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/mining" element={<Mining />} />
-        <Route path="/nft" element={<Nft />} />
+        <Route path="/" element={<Home />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
