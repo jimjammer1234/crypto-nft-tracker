@@ -28,28 +28,32 @@ export async function pollHeroMiners(coin: "PRL" | "XMR", notifiers?: Notifiers)
     const raw = await fetchHeroMinersStats(COIN_SUBDOMAIN[coin], source.identifier);
     const snapshot = normalizeHeroMiners(source.id, raw);
 
-    // The REST stats_address endpoint's hashrate figures don't match herominers' own live
-    // dashboard (verified: off by ~9 orders of magnitude, not just a units/smoothing difference).
-    // Prefer the live share-stream-derived windows where we have any data; fall back to the REST
-    // figures immediately after a restart, before any share events have arrived yet.
-    const [current, hour, day] = await Promise.all([
-      computeLiveHashrate(source.id, CURRENT_WINDOW_SECONDS),
-      computeLiveHashrate(source.id, HOUR_WINDOW_SECONDS),
-      computeLiveHashrate(source.id, DAY_WINDOW_SECONDS),
-    ]);
-    const short = await computeLiveHashrate(source.id, SHORT_WINDOW_SECONDS);
+    // Pearl's PoUW scheme uses a Bitcoin/SHA256-style difficulty convention (hashrate = difficulty
+    // * 2^32 / time), which is what its REST stats_address endpoint gets wrong compared to its own
+    // live dashboard (verified: off by ~9 orders of magnitude). Monero/RandomX uses a *different*
+    // convention (hashrate = difficulty / time, no multiplier) — verified its REST-reported figures
+    // already match that formula, so only PRL needs the live-stream override; applying the Pearl
+    // multiplier to XMR shares would inflate it by the same ~9 orders of magnitude in the wrong direction.
+    if (coin === "PRL") {
+      const [current, hour, day] = await Promise.all([
+        computeLiveHashrate(source.id, CURRENT_WINDOW_SECONDS),
+        computeLiveHashrate(source.id, HOUR_WINDOW_SECONDS),
+        computeLiveHashrate(source.id, DAY_WINDOW_SECONDS),
+      ]);
+      const short = await computeLiveHashrate(source.id, SHORT_WINDOW_SECONDS);
 
-    if (current.accountHashrate !== null) snapshot.hashrate1m = current.accountHashrate;
-    if (short.accountHashrate !== null) snapshot.hashrate5m = short.accountHashrate;
-    if (hour.accountHashrate !== null) snapshot.hashrate1hr = hour.accountHashrate;
-    if (day.accountHashrate !== null) snapshot.hashrate1d = day.accountHashrate;
+      if (current.accountHashrate !== null) snapshot.hashrate1m = current.accountHashrate;
+      if (short.accountHashrate !== null) snapshot.hashrate5m = short.accountHashrate;
+      if (hour.accountHashrate !== null) snapshot.hashrate1hr = hour.accountHashrate;
+      if (day.accountHashrate !== null) snapshot.hashrate1d = day.accountHashrate;
 
-    if (hour.perWorker.length > 0) {
-      const liveByName = new Map(hour.perWorker.map((w) => [w.workerName, w.hashrate]));
-      snapshot.workerBests = snapshot.workerBests.map((w) => ({
-        ...w,
-        hashrate: liveByName.get(w.workerName) ?? w.hashrate,
-      }));
+      if (hour.perWorker.length > 0) {
+        const liveByName = new Map(hour.perWorker.map((w) => [w.workerName, w.hashrate]));
+        snapshot.workerBests = snapshot.workerBests.map((w) => ({
+          ...w,
+          hashrate: liveByName.get(w.workerName) ?? w.hashrate,
+        }));
+      }
     }
 
     await recordMiningSnapshot(source.id, snapshot, raw, notifiers);

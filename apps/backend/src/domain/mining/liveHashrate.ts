@@ -2,9 +2,11 @@ import { and, eq, gt, sql, lt } from "drizzle-orm";
 import { db } from "../../db/client.js";
 import { miningShareEvents } from "../../db/schema/mining.js";
 
-// Average hash attempts per unit of difficulty for a difficulty-1 share, the standard constant
-// used by most pool softwares (including herominers) to convert share difficulty into an implied
-// hashrate. Reverse-engineered by matching this constant against herominers' own live dashboard.
+// Average hash attempts per unit of difficulty for a difficulty-1 share, under the Bitcoin/SHA256-
+// style convention. This is specific to coins using that convention (confirmed correct for Pearl's
+// PoUW scheme) — NOT universal. Monero/RandomX, for example, uses hashrate = difficulty / time with
+// no multiplier at all, so callers must only apply this to sources verified to need it (see
+// pollHeroMiners.ts, which currently only overrides PRL's REST-reported hashrate, not XMR's).
 const HASHES_PER_DIFFICULTY = 2 ** 32;
 
 // Below this many shares in a window, the estimate is too noisy to trust (a single lucky/unlucky
