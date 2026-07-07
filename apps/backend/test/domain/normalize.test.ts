@@ -47,16 +47,21 @@ describe("normalizeHeroMiners", () => {
     expect(snapshot.balance).toBe(Number(heroMinersPrlFixture.stats.balance));
     expect(snapshot.lastShareAt).toBe(new Date(Number(heroMinersPrlFixture.stats.lastShare) * 1000).toISOString());
     expect(snapshot.bestDifficulty).toBeNull();
-    expect(snapshot.workerBests).toEqual([]);
     expect(snapshot.blocksFound).toBe(heroMinersPrlFixture.stats.blocksFoundSolo);
-    const lastChartEntry = heroMinersPrlFixture.charts.hashrate.at(-1)!;
-    expect(snapshot.workersOnline).toBe(lastChartEntry[2]);
+    expect(snapshot.workersOnline).toBe(heroMinersPrlFixture.workers.length);
+    expect(snapshot.workerBests.length).toBe(heroMinersPrlFixture.workers.length);
+    expect(snapshot.workerBests[0]).toEqual({
+      workerName: heroMinersPrlFixture.workers[0].name,
+      bestDifficulty: null,
+      hashrate: heroMinersPrlFixture.workers[0].hashrate,
+    });
   });
 
   it("normalizes a real XMR herominers response", () => {
     const snapshot = normalizeHeroMiners("source-xmr", heroMinersXmrFixture as HeroMinersStatsRaw);
     expect(snapshot.hashrate1m).toBeGreaterThan(0);
     expect(snapshot.balance).toBe(Number(heroMinersXmrFixture.stats.balance));
+    expect(snapshot.workersOnline).toBe(heroMinersXmrFixture.workers.length);
   });
 });
 

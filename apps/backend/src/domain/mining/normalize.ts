@@ -36,10 +36,7 @@ export function normalizeCkpool(sourceId: string, raw: CkpoolStatsRaw): MiningSn
  */
 export function normalizeHeroMiners(sourceId: string, raw: HeroMinersStatsRaw): MiningSnapshot {
   const s = raw.stats;
-  // The stats_address endpoint has no dedicated worker-count field, but each entry in the
-  // hashrate chart is [timestamp, hashrate, workerCount] — the most recent one gives us a live count.
-  const hashrateChart = raw.charts?.hashrate ?? [];
-  const workersOnline = hashrateChart.length > 0 ? hashrateChart[hashrateChart.length - 1][2] : null;
+  const workers = raw.workers ?? [];
 
   return {
     sourceId,
@@ -48,14 +45,15 @@ export function normalizeHeroMiners(sourceId: string, raw: HeroMinersStatsRaw): 
     hashrate5m: s.hashrate_1h ?? null,
     hashrate1hr: s.hashrate_1h ?? null,
     hashrate1d: s.hashrate_24h ?? null,
-    workersOnline,
+    workersOnline: workers.length,
     sharesTotal: s.solo_shares_good ?? null,
     // Atomic/smallest-unit balance; per-coin decimal conversion to a display amount happens in the UI layer.
     balance: s.balance ? Number(s.balance) : null,
     lastShareAt: s.lastShare ? new Date(Number(s.lastShare) * 1000).toISOString() : null,
-    // HeroMiners' stats_address endpoint has no per-share difficulty/worker breakdown.
+    // HeroMiners has no "best share ever" concept, but the stats_address response's top-level
+    // `workers` array does give named per-rig current hashrate.
     bestDifficulty: null,
-    workerBests: [],
+    workerBests: workers.map((w) => ({ workerName: w.name, bestDifficulty: null, hashrate: w.hashrate })),
     blocksFound: s.blocksFoundSolo ?? null,
   };
 }

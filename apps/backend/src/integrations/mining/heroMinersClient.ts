@@ -1,4 +1,18 @@
+export interface HeroMinersWorkerRaw {
+  name: string;
+  hashrate: number;
+  lastShare: number; // unix seconds
+  shares_good: number;
+  shares_invalid: number;
+  shares_stale: number;
+  blocksFound: number;
+  hashrate_1h: number;
+  hashrate_6h: number;
+  hashrate_24h: number;
+}
+
 export interface HeroMinersStatsRaw {
+  workers: HeroMinersWorkerRaw[];
   stats: {
     donation_level: string;
     solo_shares_good: number;
