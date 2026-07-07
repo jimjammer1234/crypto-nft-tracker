@@ -1,11 +1,13 @@
 import { and, desc, eq } from "drizzle-orm";
 import type { MiningSnapshot, AlertRule, AlertSeverity } from "@crypto-nft-tracker/shared-types";
 import { db } from "../../db/client.js";
-import { miningSnapshots } from "../../db/schema/mining.js";
+import { miningSnapshots, miningSources } from "../../db/schema/mining.js";
 import { alertRules, alertEvents } from "../../db/schema/alerts.js";
 import { evaluateMiningAlert } from "./alertRules.js";
 import type { Notifiers } from "../../scheduler/types.js";
 import { logger } from "../../utils/logger.js";
+import { env } from "../../config/env.js";
+import { sendEmail } from "../../integrations/email/resendClient.js";
 
 /** Shared by every mining poll job: fetch the prior snapshot for comparison, persist the new one,
  * evaluate alert rules against the before/after pair, and notify listeners of both. */
@@ -98,5 +100,27 @@ export async function recordMiningSnapshot(
       payload: eventRow.payload as Record<string, unknown> | null,
       acknowledged: eventRow.acknowledged,
     });
+
+    if (rule.kind === "block_found") {
+      await sendBlockFoundEmail(sourceId, snapshot);
+    }
+  }
+}
+
+async function sendBlockFoundEmail(sourceId: string, snapshot: MiningSnapshot) {
+  if (!env.RESEND_API_KEY || !env.ALERT_EMAIL_TO) return;
+
+  const [source] = await db.select().from(miningSources).where(eq(miningSources.id, sourceId));
+  const label = source?.label ?? sourceId;
+
+  try {
+    await sendEmail(
+      env.RESEND_API_KEY,
+      env.ALERT_EMAIL_TO,
+      `Block found! — ${label}`,
+      `<p><strong>${label}</strong> just found a block.</p><p>Total blocks found so far: ${snapshot.blocksFound}</p>`
+    );
+  } catch (err) {
+    logger.error({ err, sourceId }, "failed to send block-found email");
   }
 }

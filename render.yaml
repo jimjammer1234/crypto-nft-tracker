@@ -15,7 +15,9 @@ services:
         sync: false
       - key: OPENSEA_API_KEY
         sync: false
-      - key: SIMPLEHASH_API_KEY
+      - key: RESEND_API_KEY
+        sync: false
+      - key: ALERT_EMAIL_TO
         sync: false
       - key: CKPOOL_BTC_ADDRESS
         value: bc1q38xawvghzt43h869m3lqjazvs7n2dlq7pfc6jh

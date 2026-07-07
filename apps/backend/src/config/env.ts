@@ -13,7 +13,9 @@ const envSchema = z.object({
   HASHVAULT_XMR_ADDRESS: z.string().optional(),
 
   OPENSEA_API_KEY: z.string().optional(),
-  SIMPLEHASH_API_KEY: z.string().optional(),
+
+  RESEND_API_KEY: z.string().optional(),
+  ALERT_EMAIL_TO: z.string().email().optional(),
 });
 
 export const env = envSchema.parse(process.env);
