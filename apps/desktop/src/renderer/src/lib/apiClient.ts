@@ -1,9 +1,12 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-const TOKEN = import.meta.env.VITE_API_TOKEN as string;
+import { getStoredToken } from "./auth.js";
+
+// Empty string (relative/same-origin) when not baked in at build time — the web build is served
+// directly from the backend, so its own origin is always the right API host.
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "";
 
 async function getJson<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { Authorization: `Bearer ${TOKEN}` },
+    headers: { Authorization: `Bearer ${getStoredToken() ?? ""}` },
   });
   if (!res.ok) {
     throw new Error(`API request failed (${path}): ${res.status} ${res.statusText}`);
@@ -14,7 +17,7 @@ async function getJson<T>(path: string): Promise<T> {
 async function patchJson<T>(path: string, body: unknown): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     method: "PATCH",
-    headers: { Authorization: `Bearer ${TOKEN}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${getStoredToken() ?? ""}`, "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
   if (!res.ok) {

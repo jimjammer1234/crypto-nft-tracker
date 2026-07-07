@@ -7,4 +7,5 @@ dist/
 .DS_Store
 apps/desktop/out/
 apps/desktop/release/
+apps/desktop/dist-web/
 *.tsbuildinfo
