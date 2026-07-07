@@ -9,7 +9,7 @@
     "build": "electron-vite build",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "start": "electron-vite preview",
-    "package:mac": "electron-vite build && electron-builder --mac"
+    "package:mac": "electron-vite build && electron-builder --mac dir"
   },
   "dependencies": {
     "@crypto-nft-tracker/shared-types": "workspace:*",

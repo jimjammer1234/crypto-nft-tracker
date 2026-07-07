@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, boolean, timestamp, jsonb, numeric, integer, bigserial } from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, boolean, timestamp, jsonb, numeric, integer, bigserial, index } from "drizzle-orm/pg-core";
 
 export const miningSources = pgTable("mining_sources", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -32,6 +32,23 @@ export const miningSnapshots = pgTable("mining_snapshots", {
   rawPayload: jsonb("raw_payload"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+/** Raw share events from a pool's live SSE stream (currently herominers only), used to compute a
+ * live windowed hashrate that matches the pool's own real-time dashboard, since some pools' REST
+ * stats endpoints report a hashrate figure computed completely differently from their live page. */
+export const miningShareEvents = pgTable(
+  "mining_share_events",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    sourceId: uuid("source_id").notNull().references(() => miningSources.id),
+    workerName: text("worker_name").notNull(),
+    difficulty: numeric("difficulty").notNull(),
+    occurredAt: timestamp("occurred_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    sourceOccurredIdx: index("mining_share_events_source_occurred_idx").on(t.sourceId, t.occurredAt),
+  })
+);
 
 export const miningPayoutEvents = pgTable("mining_payout_events", {
   id: bigserial("id", { mode: "number" }).primaryKey(),

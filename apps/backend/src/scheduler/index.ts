@@ -5,6 +5,7 @@ import { pollHashvault } from "./jobs/pollHashvault.js";
 import { pollKano } from "./jobs/pollKano.js";
 import { pollOpenSeaCollections, pollOpenSeaListings } from "./jobs/pollOpenSeaCollections.js";
 import { pollWalletPortfolios } from "./jobs/pollWalletPortfolios.js";
+import { pruneOldShareEvents } from "../domain/mining/liveHashrate.js";
 import { logger } from "../utils/logger.js";
 import type { Notifiers } from "./types.js";
 
@@ -34,6 +35,9 @@ export function startScheduler(notifiers: Notifiers) {
   cron.schedule("*/15 * * * *", () => {
     for (const job of nftSlowJobs) void job();
   });
+
+  // Share event history only feeds windows up to 24h; prune anything older, hourly.
+  cron.schedule("0 * * * *", () => void pruneOldShareEvents());
 
   // Run everything once immediately on boot so the dashboard isn't empty while waiting for the first tick.
   for (const job of [...miningJobs, ...nftFastJobs, ...nftSlowJobs]) void job();
