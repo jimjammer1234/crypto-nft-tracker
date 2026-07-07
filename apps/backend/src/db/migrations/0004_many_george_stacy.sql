@@ -1,0 +1,1 @@
+ALTER TABLE "nft_collections" ADD COLUMN "floor_listings" jsonb;

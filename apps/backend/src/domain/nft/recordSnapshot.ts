@@ -86,6 +86,20 @@ export async function recordCollectionSnapshot(collectionId: string, snapshot: N
   }
 }
 
+/** Persists the N cheapest listings from this poll's live batch directly onto the collection row,
+ * so "floor listings" always reflects what's actually listed right now rather than the historical
+ * event log (which can include long-since-sold/cancelled entries). A bot-relisted item is still a
+ * real, buyable offer at that price, so it counts here even though it's excluded from alerts/recents. */
+export async function updateFloorListings(collectionId: string, listings: NftListingEvent[], count = 3) {
+  const cheapest = [...listings]
+    .filter((l) => l.price !== null)
+    .sort((a, b) => a.price! - b.price!)
+    .slice(0, count)
+    .map((l) => ({ tokenId: l.tokenId, price: l.price, currency: l.currency }));
+
+  await db.update(nftCollections).set({ floorListings: cheapest }).where(eq(nftCollections.id, collectionId));
+}
+
 const BOT_RELIST_THRESHOLD_MS = 20 * 60 * 1000;
 
 /** True when this token's previous listing (if any) ended less than 20 minutes before this one —

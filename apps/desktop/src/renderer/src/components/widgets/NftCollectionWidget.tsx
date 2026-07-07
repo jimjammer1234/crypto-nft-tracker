@@ -29,15 +29,33 @@ export function NftCollectionWidget({ collection }: { collection: NftCollectionR
         <span>{listings.length} listed</span>
       </div>
 
-      {listings.length > 0 && (
-        <div className="mt-3 space-y-1 border-t border-border pt-2">
-          {listings.slice(0, 3).map((listing) => (
-            <div key={listing.id} className="flex items-center justify-between text-xs">
-              <span className="text-gray-400">#{listing.tokenId}</span>
-              <span className="text-yellow-400">{formatEth(listing.price, listing.currency ?? "ETH")}</span>
-              <span className="text-gray-600">{formatRelativeTime(listing.listedAt)}</span>
+      {(collection.floorListings?.length || listings.length > 0) && (
+        <div className="mt-3 grid grid-cols-2 gap-3 border-t border-border pt-2">
+          <div>
+            <div className="mb-1 text-[10px] uppercase tracking-wide text-gray-600">Floor</div>
+            <div className="space-y-1">
+              {(collection.floorListings ?? []).map((listing) => (
+                <div key={listing.tokenId} className="flex items-center justify-between text-xs">
+                  <span className="truncate text-gray-400">#{listing.tokenId}</span>
+                  <span className="text-yellow-400">{formatEth(listing.price, listing.currency ?? "ETH")}</span>
+                </div>
+              ))}
+              {!collection.floorListings?.length && <div className="text-xs text-gray-600">—</div>}
             </div>
-          ))}
+          </div>
+
+          <div>
+            <div className="mb-1 text-[10px] uppercase tracking-wide text-gray-600">Recent</div>
+            <div className="space-y-1">
+              {listings.slice(0, 3).map((listing) => (
+                <div key={listing.id} className="flex items-center justify-between text-xs">
+                  <span className="truncate text-gray-400">#{listing.tokenId}</span>
+                  <span className="text-gray-600">{formatRelativeTime(listing.listedAt)}</span>
+                </div>
+              ))}
+              {listings.length === 0 && <div className="text-xs text-gray-600">—</div>}
+            </div>
+          </div>
         </div>
       )}
     </Card>

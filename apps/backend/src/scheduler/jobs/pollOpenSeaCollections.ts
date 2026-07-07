@@ -3,7 +3,7 @@ import { db } from "../../db/client.js";
 import { nftCollections } from "../../db/schema/nft.js";
 import { fetchCollectionStats, fetchCollectionListings } from "../../integrations/nft/openSeaClient.js";
 import { normalizeOpenSeaCollectionSnapshot, normalizeOpenSeaListing } from "../../domain/nft/normalize.js";
-import { recordCollectionSnapshot, recordListings } from "../../domain/nft/recordSnapshot.js";
+import { recordCollectionSnapshot, recordListings, updateFloorListings } from "../../domain/nft/recordSnapshot.js";
 import { env } from "../../config/env.js";
 import { logger } from "../../utils/logger.js";
 import type { Notifiers } from "../types.js";
@@ -33,6 +33,7 @@ export async function pollOpenSeaListings(notifiers?: Notifiers) {
       const response = await fetchCollectionListings(env.OPENSEA_API_KEY, collection.slug, 50);
       const listings = response.listings.map((raw) => normalizeOpenSeaListing(collection.id, raw));
       await recordListings(collection.id, listings, notifiers);
+      await updateFloorListings(collection.id, listings);
       logger.info({ collection: collection.slug, count: listings.length }, "polled opensea listings");
     } catch (err) {
       logger.error({ err, collection: collection.slug }, "opensea listings poll failed");

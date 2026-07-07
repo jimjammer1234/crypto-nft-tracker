@@ -54,6 +54,7 @@ export interface NftCollectionRow {
   slug: string;
   name: string;
   contractAddress: string | null;
+  floorListings: Array<{ tokenId: string; price: number | null; currency: string }> | null;
 }
 
 export interface NftCollectionSnapshotRow {

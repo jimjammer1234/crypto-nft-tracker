@@ -16,6 +16,10 @@ export const nftCollections = pgTable("nft_collections", {
   name: text("name").notNull(),
   chain: text("chain").notNull().default("ethereum"),
   enabled: boolean("enabled").notNull().default(true),
+  // The 3 cheapest listings from the most recent poll: [{ tokenId, price, currency }]. Computed
+  // straight from that poll's live listings batch, not the historical event log, so it always
+  // reflects what's actually listed now rather than possibly-stale/no-longer-active entries.
+  floorListings: jsonb("floor_listings"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 }, (t) => ({
   slugChainUnique: unique().on(t.slug, t.chain),

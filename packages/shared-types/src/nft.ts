@@ -15,6 +15,8 @@ export interface NftCollection {
   name: string;
   chain: string;
   enabled: boolean;
+  /** Cheapest listings from the most recent poll of the live order book. */
+  floorListings: Array<{ tokenId: string; price: number | null; currency: string }> | null;
 }
 
 export interface NftCollectionSnapshot {
