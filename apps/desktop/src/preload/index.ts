@@ -1,7 +1,11 @@
-import { contextBridge } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
+import type { WsServerEvent } from "@crypto-nft-tracker/shared-types";
 
-// No privileged APIs exposed yet; the renderer talks to the backend directly over HTTPS.
-// This bridge exists as the place to add IPC (tray/notifications/settings) in Phase 6.
-contextBridge.exposeInMainWorld("app", {
+contextBridge.exposeInMainWorld("electronBridge", {
   platform: process.platform,
+  onWsEvent: (callback: (event: WsServerEvent) => void) => {
+    const listener = (_: unknown, event: WsServerEvent) => callback(event);
+    ipcRenderer.on("ws-event", listener);
+    return () => ipcRenderer.removeListener("ws-event", listener);
+  },
 });

@@ -11,6 +11,18 @@ async function getJson<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function patchJson<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: "PATCH",
+    headers: { Authorization: `Bearer ${TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`API request failed (${path}): ${res.status} ${res.statusText}`);
+  }
+  return (await res.json()) as T;
+}
+
 export interface MiningSourceRow {
   id: string;
   kind: string;
@@ -77,6 +89,24 @@ export interface NftWalletSnapshotRow {
   holdings: Array<{ collectionSlug: string; tokenId: string; estValue: number | null }>;
 }
 
+export interface AlertRuleRow {
+  id: string;
+  kind: string;
+  targetType: string;
+  targetId: string;
+  config: Record<string, unknown>;
+  enabled: boolean;
+}
+
+export interface AlertEventRow {
+  id: number;
+  ruleId: string;
+  firedAt: string;
+  message: string;
+  severity: string;
+  acknowledged: boolean;
+}
+
 export const api = {
   getMiningSources: () => getJson<MiningSourceRow[]>("/api/mining/sources"),
   getMiningSnapshots: (sourceId: string, limit = 100) =>
@@ -91,4 +121,9 @@ export const api = {
   getNftWallets: () => getJson<NftWalletRow[]>("/api/nft/wallets"),
   getNftWalletSnapshots: (walletId: string, limit = 10) =>
     getJson<NftWalletSnapshotRow[]>(`/api/nft/wallets/${walletId}/snapshots?limit=${limit}`),
+
+  getAlertRules: () => getJson<AlertRuleRow[]>("/api/alerts/rules"),
+  patchAlertRule: (id: string, body: { enabled?: boolean; config?: Record<string, unknown> }) =>
+    patchJson<AlertRuleRow>(`/api/alerts/rules/${id}`, body),
+  getAlertEvents: (limit = 100) => getJson<AlertEventRow[]>(`/api/alerts/events?limit=${limit}`),
 };
