@@ -14,6 +14,22 @@ export function formatHashrate(value: string | number | null | undefined): strin
   return `${scaled.toFixed(scaled >= 100 ? 0 : scaled >= 10 ? 1 : 2)} ${HASHRATE_UNITS[unitIndex]}`;
 }
 
+const DIFFICULTY_UNITS = ["", "K", "M", "G", "T", "P", "E"];
+
+export function formatDifficulty(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return "—";
+  const num = Number(value);
+  if (Number.isNaN(num) || num === 0) return "0";
+
+  let scaled = num;
+  let unitIndex = 0;
+  while (scaled >= 1000 && unitIndex < DIFFICULTY_UNITS.length - 1) {
+    scaled /= 1000;
+    unitIndex++;
+  }
+  return `${scaled.toFixed(scaled >= 100 ? 0 : scaled >= 10 ? 1 : 2)}${DIFFICULTY_UNITS[unitIndex]}`;
+}
+
 export function formatEth(value: string | number | null | undefined, currency = "ETH"): string {
   if (value === null || value === undefined) return "—";
   const num = Number(value);

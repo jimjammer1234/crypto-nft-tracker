@@ -7,6 +7,9 @@ export interface KanoParsedStats {
   totalHashrate: number | null;
   totalShares: number | null;
   secondsSinceLastShare: number | null;
+  /** Highest all-time "Best Ever" difficulty share across all workers. */
+  bestDifficulty: number | null;
+  workerBests: Array<{ workerName: string; bestDifficulty: number | null }>;
 }
 
 /**
@@ -41,15 +44,31 @@ export function parseKanoWorkersHtml(html: string): KanoParsedStats {
   });
 
   let secondsSinceLastShare: number | null = null;
+  // "Best Ever" is the last (15th) column in the worker table's header order.
+  const workerBests: Array<{ workerName: string; bestDifficulty: number | null }> = [];
+
   $("#wkt tbody tr").each((_, row) => {
-    const raw = $(row).find("td:nth-child(3)").attr("data-srt");
-    if (raw === undefined) return;
-    const seconds = Number(raw);
-    if (Number.isNaN(seconds)) return;
-    if (secondsSinceLastShare === null || seconds < secondsSinceLastShare) {
-      secondsSinceLastShare = seconds;
+    const cells = $(row).find("td");
+    const lshrRaw = cells.eq(2).attr("data-srt");
+    if (lshrRaw !== undefined) {
+      const seconds = Number(lshrRaw);
+      if (!Number.isNaN(seconds) && (secondsSinceLastShare === null || seconds < secondsSinceLastShare)) {
+        secondsSinceLastShare = seconds;
+      }
+    }
+
+    const workerName = cells.eq(0).text().trim();
+    const bestEverRaw = cells.eq(14).attr("data-srt");
+    const bestDifficulty = bestEverRaw !== undefined ? Number(bestEverRaw) : null;
+    if (workerName) {
+      workerBests.push({ workerName, bestDifficulty: Number.isNaN(bestDifficulty as number) ? null : bestDifficulty });
     }
   });
+
+  const bestDifficulty = workerBests.reduce<number | null>((max, w) => {
+    if (w.bestDifficulty === null) return max;
+    return max === null ? w.bestDifficulty : Math.max(max, w.bestDifficulty);
+  }, null);
 
   return {
     totalWorkers: totalsMatch ? Number(totalsMatch[1]) : null,
@@ -57,5 +76,7 @@ export function parseKanoWorkersHtml(html: string): KanoParsedStats {
     totalHashrate,
     totalShares,
     secondsSinceLastShare,
+    bestDifficulty,
+    workerBests,
   };
 }

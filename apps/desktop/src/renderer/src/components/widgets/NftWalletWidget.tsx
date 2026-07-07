@@ -1,6 +1,7 @@
 import type { NftWalletRow } from "../../lib/apiClient.js";
 import { useNftWalletSnapshots } from "../../hooks/useNftData.js";
 import { formatEth } from "../../lib/format.js";
+import { openExternal } from "../../lib/openExternal.js";
 import { Sparkline } from "../ui/Sparkline.js";
 import { Card } from "../ui/Card.js";
 
@@ -10,7 +11,10 @@ export function NftWalletWidget({ wallet }: { wallet: NftWalletRow }) {
   const chartData = [...snapshots].reverse().map((s) => ({ x: s.polledAt, y: Number(s.totalValueEth ?? 0) }));
 
   return (
-    <Card>
+    <Card
+      onClick={() => openExternal(`https://opensea.io/${wallet.address}`)}
+      className="cursor-pointer transition-colors hover:border-purple-500"
+    >
       <div className="truncate text-xs text-gray-400" title={wallet.address}>
         {wallet.label ?? `${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`}
       </div>

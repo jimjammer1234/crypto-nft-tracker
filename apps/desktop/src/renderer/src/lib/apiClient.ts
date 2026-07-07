@@ -44,6 +44,9 @@ export interface MiningSnapshotRow {
   sharesTotal: string | null;
   balance: string | null;
   lastShareAt: string | null;
+  bestDifficulty: string | null;
+  workerBests: Array<{ workerName: string; bestDifficulty: number | null }> | null;
+  blocksFound: number | null;
 }
 
 export interface NftCollectionRow {

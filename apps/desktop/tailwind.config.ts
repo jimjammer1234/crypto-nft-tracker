@@ -12,6 +12,15 @@ export default {
         blue: { 400: "#60a5fa", 500: "#3b82f6", 600: "#2563eb" },
         yellow: { 400: "#fde047", 500: "#facc15", 600: "#eab308" },
       },
+      keyframes: {
+        "block-found": {
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(34, 197, 94, 0.6)" },
+          "50%": { boxShadow: "0 0 0 6px rgba(34, 197, 94, 0)" },
+        },
+      },
+      animation: {
+        "block-found": "block-found 1s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

@@ -18,6 +18,10 @@ export function normalizeCkpool(sourceId: string, raw: CkpoolStatsRaw): MiningSn
     // ckpool solo pays out per found block rather than tracking a running balance; no balance field exists.
     balance: null,
     lastShareAt: raw.lastshare ? new Date(raw.lastshare * 1000).toISOString() : null,
+    bestDifficulty: raw.bestever ?? null,
+    workerBests: (raw.worker ?? []).map((w) => ({ workerName: w.workername, bestDifficulty: w.bestever ?? null })),
+    // ckpool's per-user solo endpoint doesn't report a blocks-found counter.
+    blocksFound: null,
   };
 }
 
@@ -40,6 +44,10 @@ export function normalizeHeroMiners(sourceId: string, raw: HeroMinersStatsRaw): 
     // Atomic/smallest-unit balance; per-coin decimal conversion to a display amount happens in the UI layer.
     balance: s.balance ? Number(s.balance) : null,
     lastShareAt: s.lastShare ? new Date(Number(s.lastShare) * 1000).toISOString() : null,
+    // HeroMiners' stats_address endpoint has no per-share difficulty/worker breakdown.
+    bestDifficulty: null,
+    workerBests: [],
+    blocksFound: s.blocksFoundSolo ?? null,
   };
 }
 
@@ -58,6 +66,10 @@ export function normalizeHashvault(sourceId: string, raw: HashvaultStatsRaw): Mi
     balance: raw.revenue?.confirmedBalance ?? null,
     // hashvault's lastShare is unix milliseconds, unlike ckpool/herominers which use seconds.
     lastShareAt: solo.lastShare ? new Date(solo.lastShare).toISOString() : null,
+    // hashvault's stats endpoint has no per-share difficulty/worker breakdown.
+    bestDifficulty: null,
+    workerBests: [],
+    blocksFound: solo.foundBlocks ?? null,
   };
 }
 
@@ -77,5 +89,9 @@ export function normalizeKano(sourceId: string, parsed: KanoParsedStats, polledA
       parsed.secondsSinceLastShare !== null
         ? new Date(polledAt.getTime() - parsed.secondsSinceLastShare * 1000).toISOString()
         : null,
+    bestDifficulty: parsed.bestDifficulty,
+    workerBests: parsed.workerBests,
+    // kano.is's HTML worker page has no blocks-found counter for this pool.
+    blocksFound: null,
   };
 }

@@ -2,6 +2,7 @@ export type AlertKind =
   | "rig_offline"
   | "hashrate_drop"
   | "payout_received"
+  | "block_found"
   | "new_listing"
   | "floor_threshold"
   | "portfolio_change";

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { createTray } from "./tray.js";
 import { configureAutoStart } from "./autoStart.js";
 import { startWsBridge } from "./wsBridge.js";
+import { registerIpcHandlers } from "./ipc.js";
 
 const isDev = !app.isPackaged;
 let mainWindow: BrowserWindow | null = null;
@@ -62,6 +63,7 @@ app.whenReady().then(() => {
   createTray(() => mainWindow, showWindow);
   configureAutoStart(true);
   startWsBridge(() => mainWindow);
+  registerIpcHandlers();
 
   app.on("activate", () => {
     showWindow();

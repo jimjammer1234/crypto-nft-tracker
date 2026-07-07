@@ -23,6 +23,12 @@ export const miningSnapshots = pgTable("mining_snapshots", {
   sharesTotal: numeric("shares_total"),
   balance: numeric("balance"),
   lastShareAt: timestamp("last_share_at", { withTimezone: true }),
+  // Highest-difficulty share ever submitted by this rig (account-level); null where the source API doesn't expose it.
+  bestDifficulty: numeric("best_difficulty"),
+  // Per-worker breakdown of the same stat, where the source exposes individual workers: [{ workerName, bestDifficulty }].
+  workerBests: jsonb("worker_bests"),
+  // Cumulative blocks found so far, where the source exposes it; used to detect newly-found blocks.
+  blocksFound: integer("blocks_found"),
   rawPayload: jsonb("raw_payload"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });

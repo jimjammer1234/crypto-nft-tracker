@@ -30,7 +30,7 @@ export function evaluateMiningAlert(
         ruleId: rule.id,
         severity: "critical",
         message: `No shares received in ${Math.round(idleMinutes)} minutes`,
-        payload: { idleMinutes, lastShareAt: current.lastShareAt },
+        payload: { kind: "rig_offline", sourceId: current.sourceId, idleMinutes, lastShareAt: current.lastShareAt },
       };
     }
 
@@ -48,7 +48,7 @@ export function evaluateMiningAlert(
         ruleId: rule.id,
         severity: "warning",
         message: `Hashrate dropped ${actualDropPercent.toFixed(0)}% (${previousRate.toExponential(2)} -> ${currentRate.toExponential(2)} H/s)`,
-        payload: { previousRate, currentRate, actualDropPercent },
+        payload: { kind: "hashrate_drop", sourceId: current.sourceId, previousRate, currentRate, actualDropPercent },
       };
     }
 
@@ -62,7 +62,26 @@ export function evaluateMiningAlert(
         ruleId: rule.id,
         severity: "info",
         message: `Balance decreased by ${amount} (likely a payout)`,
-        payload: { amount, previousBalance: previous.balance, currentBalance: current.balance },
+        payload: {
+          kind: "payout_received",
+          sourceId: current.sourceId,
+          amount,
+          previousBalance: previous.balance,
+          currentBalance: current.balance,
+        },
+      };
+    }
+
+    case "block_found": {
+      if (current.blocksFound === null || current.blocksFound === undefined) return null;
+      if (previous?.blocksFound === null || previous?.blocksFound === undefined) return null;
+      if (current.blocksFound <= previous.blocksFound) return null;
+
+      return {
+        ruleId: rule.id,
+        severity: "critical",
+        message: "Block found!",
+        payload: { kind: "block_found", sourceId: current.sourceId, blocksFound: current.blocksFound },
       };
     }
 

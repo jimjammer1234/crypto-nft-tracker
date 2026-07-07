@@ -27,6 +27,13 @@ describe("normalizeCkpool", () => {
     expect(snapshot.sharesTotal).toBe(6541698908997);
     expect(snapshot.balance).toBeNull();
     expect(snapshot.lastShareAt).toBe(new Date(1783366299 * 1000).toISOString());
+    expect(snapshot.bestDifficulty).toBe(ckpoolFixture.bestever);
+    expect(snapshot.workerBests.length).toBe(ckpoolFixture.worker.length);
+    expect(snapshot.workerBests[0]).toEqual({
+      workerName: ckpoolFixture.worker[0].workername,
+      bestDifficulty: ckpoolFixture.worker[0].bestever,
+    });
+    expect(snapshot.blocksFound).toBeNull();
   });
 });
 
@@ -37,6 +44,9 @@ describe("normalizeHeroMiners", () => {
     expect(snapshot.sharesTotal).toBe(heroMinersPrlFixture.stats.solo_shares_good);
     expect(snapshot.balance).toBe(Number(heroMinersPrlFixture.stats.balance));
     expect(snapshot.lastShareAt).toBe(new Date(Number(heroMinersPrlFixture.stats.lastShare) * 1000).toISOString());
+    expect(snapshot.bestDifficulty).toBeNull();
+    expect(snapshot.workerBests).toEqual([]);
+    expect(snapshot.blocksFound).toBe(heroMinersPrlFixture.stats.blocksFoundSolo);
   });
 
   it("normalizes a real XMR herominers response", () => {
@@ -52,6 +62,7 @@ describe("normalizeHashvault", () => {
     expect(snapshot.hashrate1m).toBe(hashvaultFixture.solo.hashRate);
     expect(snapshot.balance).toBe(hashvaultFixture.revenue.confirmedBalance);
     expect(snapshot.lastShareAt).toBe(new Date(hashvaultFixture.solo.lastShare).toISOString());
+    expect(snapshot.blocksFound).toBe(hashvaultFixture.solo.foundBlocks);
   });
 });
 
@@ -63,6 +74,10 @@ describe("kano.is HTML parsing", () => {
     expect(parsed.totalShares).toBe(22135063);
     expect(parsed.totalHashrate).toBeCloseTo(218.73e12, -9);
     expect(parsed.secondsSinceLastShare).toBe(0);
+    expect(parsed.bestDifficulty).toBe(554199303943);
+    expect(parsed.workerBests).toEqual(
+      expect.arrayContaining([{ workerName: "jimjam123123.SWITCH", bestDifficulty: 554199303943 }])
+    );
   });
 
   it("normalizeKano converts parsed HTML stats into a MiningSnapshot", () => {
@@ -72,5 +87,7 @@ describe("kano.is HTML parsing", () => {
     expect(snapshot.workersOnline).toBe(3);
     expect(snapshot.hashrate1m).toBeCloseTo(218.73e12, -9);
     expect(snapshot.lastShareAt).toBe(polledAt.toISOString());
+    expect(snapshot.bestDifficulty).toBe(554199303943);
+    expect(snapshot.blocksFound).toBeNull();
   });
 });

@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld("electronBridge", {
     ipcRenderer.on("ws-event", listener);
     return () => ipcRenderer.removeListener("ws-event", listener);
   },
+  openExternal: (url: string) => ipcRenderer.invoke("open-external", url),
 });

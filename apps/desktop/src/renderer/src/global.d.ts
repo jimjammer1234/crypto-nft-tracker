@@ -5,6 +5,7 @@ declare global {
     electronBridge?: {
       platform: string;
       onWsEvent: (callback: (event: WsServerEvent) => void) => () => void;
+      openExternal: (url: string) => Promise<void>;
     };
   }
 }

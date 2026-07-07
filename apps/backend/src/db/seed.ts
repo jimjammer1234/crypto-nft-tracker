@@ -96,7 +96,10 @@ async function seedMiningSources() {
       { kind: "rig_offline", config: { staleMinutes: 30 } },
       { kind: "hashrate_drop", config: { dropPercent: 30 } },
     ];
-    if (seed.tracksBalance) rules.push({ kind: "payout_received", config: {} });
+    if (seed.tracksBalance) {
+      // herominers/hashvault report a blocks-found counter; ckpool/kano's stats endpoints don't.
+      rules.push({ kind: "payout_received", config: {} }, { kind: "block_found", config: {} });
+    }
     await seedAlertRules("mining_source", sourceId, rules);
   }
 }

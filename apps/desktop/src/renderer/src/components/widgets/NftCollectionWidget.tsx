@@ -1,6 +1,7 @@
 import type { NftCollectionRow } from "../../lib/apiClient.js";
 import { useNftCollectionSnapshots, useNftCollectionListings } from "../../hooks/useNftData.js";
 import { formatEth, formatRelativeTime } from "../../lib/format.js";
+import { openExternal } from "../../lib/openExternal.js";
 import { Sparkline } from "../ui/Sparkline.js";
 import { Card } from "../ui/Card.js";
 
@@ -12,7 +13,10 @@ export function NftCollectionWidget({ collection }: { collection: NftCollectionR
   const chartData = [...snapshots].reverse().map((s) => ({ x: s.polledAt, y: Number(s.floorPrice ?? 0) }));
 
   return (
-    <Card>
+    <Card
+      onClick={() => openExternal(`https://opensea.io/collection/${collection.slug}`)}
+      className="cursor-pointer transition-colors hover:border-blue-500"
+    >
       <div className="text-sm font-medium text-white">{collection.name}</div>
       <div className="mt-3 text-2xl font-semibold text-blue-400">{formatEth(latest?.floorPrice, latest?.floorCurrency)}</div>
 

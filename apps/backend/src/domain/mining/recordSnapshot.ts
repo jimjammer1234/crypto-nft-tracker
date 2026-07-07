@@ -34,6 +34,9 @@ export async function recordMiningSnapshot(
         sharesTotal: previousRow.sharesTotal ? Number(previousRow.sharesTotal) : null,
         balance: previousRow.balance ? Number(previousRow.balance) : null,
         lastShareAt: previousRow.lastShareAt?.toISOString() ?? null,
+        bestDifficulty: previousRow.bestDifficulty ? Number(previousRow.bestDifficulty) : null,
+        workerBests: (previousRow.workerBests as MiningSnapshot["workerBests"]) ?? [],
+        blocksFound: previousRow.blocksFound,
       }
     : null;
 
@@ -48,6 +51,9 @@ export async function recordMiningSnapshot(
     sharesTotal: snapshot.sharesTotal?.toString(),
     balance: snapshot.balance?.toString(),
     lastShareAt: snapshot.lastShareAt ? new Date(snapshot.lastShareAt) : null,
+    bestDifficulty: snapshot.bestDifficulty?.toString(),
+    workerBests: snapshot.workerBests,
+    blocksFound: snapshot.blocksFound,
     rawPayload: rawPayload as object,
   });
 
