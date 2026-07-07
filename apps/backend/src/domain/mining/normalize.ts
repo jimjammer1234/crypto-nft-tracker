@@ -19,7 +19,11 @@ export function normalizeCkpool(sourceId: string, raw: CkpoolStatsRaw): MiningSn
     balance: null,
     lastShareAt: raw.lastshare ? new Date(raw.lastshare * 1000).toISOString() : null,
     bestDifficulty: raw.bestever ?? null,
-    workerBests: (raw.worker ?? []).map((w) => ({ workerName: w.workername, bestDifficulty: w.bestever ?? null })),
+    workerBests: (raw.worker ?? []).map((w) => ({
+      workerName: w.workername,
+      bestDifficulty: w.bestever ?? null,
+      hashrate: parseHashrateString(w.hashrate1hr),
+    })),
     // ckpool's per-user solo endpoint doesn't report a blocks-found counter.
     blocksFound: null,
   };
@@ -73,9 +77,10 @@ export function normalizeHashvault(sourceId: string, raw: HashvaultStatsRaw, wor
     balance: raw.revenue?.confirmedBalance ?? null,
     // hashvault's lastShare is unix milliseconds, unlike ckpool/herominers which use seconds.
     lastShareAt: solo.lastShare ? new Date(solo.lastShare).toISOString() : null,
-    // hashvault's stats endpoint has no per-share difficulty/worker breakdown.
+    // hashvault has no per-share difficulty stat at all, but its separate /workers endpoint
+    // gives named per-rig hashrate.
     bestDifficulty: null,
-    workerBests: [],
+    workerBests: (workers?.solo ?? []).map((w) => ({ workerName: w.name, bestDifficulty: null, hashrate: w.hashRate })),
     blocksFound: solo.foundBlocks ?? null,
   };
 }

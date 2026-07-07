@@ -65,11 +65,16 @@ export function MiningWidget({ source }: { source: MiningSourceRow }) {
       )}
 
       {workerBests.length > 0 && (
-        <div className="mt-2 space-y-1">
+        <div className="mt-2 space-y-1 border-t border-border pt-2">
           {workerBests.map((worker) => (
             <div key={worker.workerName} className="flex justify-between text-xs text-gray-500">
               <span className="truncate">{worker.workerName.split(".").slice(1).join(".") || worker.workerName}</span>
-              <span>{formatDifficulty(worker.bestDifficulty)}</span>
+              <span>
+                {formatHashrate(worker.hashrate)}
+                {worker.bestDifficulty !== null && (
+                  <span className="text-gray-600"> · best {formatDifficulty(worker.bestDifficulty)}</span>
+                )}
+              </span>
             </div>
           ))}
         </div>

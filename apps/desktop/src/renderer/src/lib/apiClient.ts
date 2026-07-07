@@ -45,7 +45,7 @@ export interface MiningSnapshotRow {
   balance: string | null;
   lastShareAt: string | null;
   bestDifficulty: string | null;
-  workerBests: Array<{ workerName: string; bestDifficulty: number | null }> | null;
+  workerBests: Array<{ workerName: string; bestDifficulty: number | null; hashrate: number | null }> | null;
   blocksFound: number | null;
 }
 

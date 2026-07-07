@@ -30,10 +30,11 @@ describe("normalizeCkpool", () => {
     expect(snapshot.lastShareAt).toBe(new Date(1783366299 * 1000).toISOString());
     expect(snapshot.bestDifficulty).toBe(ckpoolFixture.bestever);
     expect(snapshot.workerBests.length).toBe(ckpoolFixture.worker.length);
-    expect(snapshot.workerBests[0]).toEqual({
+    expect(snapshot.workerBests[0]).toMatchObject({
       workerName: ckpoolFixture.worker[0].workername,
       bestDifficulty: ckpoolFixture.worker[0].bestever,
     });
+    expect(snapshot.workerBests[0].hashrate).toBeGreaterThan(0);
     expect(snapshot.blocksFound).toBeNull();
   });
 });
@@ -77,6 +78,12 @@ describe("normalizeHashvault", () => {
     );
     const expectedOnline = hashvaultWorkersFixture.solo.filter((w) => !w.offline).length;
     expect(snapshot.workersOnline).toBe(expectedOnline);
+    expect(snapshot.workerBests.length).toBe(hashvaultWorkersFixture.solo.length);
+    expect(snapshot.workerBests[0]).toEqual({
+      workerName: hashvaultWorkersFixture.solo[0].name,
+      bestDifficulty: null,
+      hashrate: hashvaultWorkersFixture.solo[0].hashRate,
+    });
   });
 });
 
@@ -90,8 +97,12 @@ describe("kano.is HTML parsing", () => {
     expect(parsed.secondsSinceLastShare).toBe(0);
     expect(parsed.bestDifficulty).toBe(554199303943);
     expect(parsed.workerBests).toEqual(
-      expect.arrayContaining([{ workerName: "jimjam123123.SWITCH", bestDifficulty: 554199303943 }])
+      expect.arrayContaining([
+        expect.objectContaining({ workerName: "jimjam123123.SWITCH", bestDifficulty: 554199303943 }),
+      ])
     );
+    const switchWorker = parsed.workerBests.find((w) => w.workerName === "jimjam123123.SWITCH")!;
+    expect(switchWorker.hashrate).toBeCloseTo(206.13e12, -10);
   });
 
   it("normalizeKano converts parsed HTML stats into a MiningSnapshot", () => {

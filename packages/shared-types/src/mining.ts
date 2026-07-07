@@ -25,8 +25,9 @@ export interface MiningSnapshot {
   lastShareAt: string | null;
   /** Highest-difficulty share ever submitted (account-level); null where the source doesn't expose it. */
   bestDifficulty: number | null;
-  /** Per-worker breakdown of the same stat, where the source exposes individual workers. */
-  workerBests: Array<{ workerName: string; bestDifficulty: number | null }>;
+  /** Per-worker breakdown, where the source exposes individual workers. Either field may be null
+   * per-worker depending on what that source's API actually reports. */
+  workerBests: Array<{ workerName: string; bestDifficulty: number | null; hashrate: number | null }>;
   /** Cumulative blocks found so far, where the source exposes it. */
   blocksFound: number | null;
 }

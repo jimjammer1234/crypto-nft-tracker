@@ -9,7 +9,7 @@ export interface KanoParsedStats {
   secondsSinceLastShare: number | null;
   /** Highest all-time "Best Ever" difficulty share across all workers. */
   bestDifficulty: number | null;
-  workerBests: Array<{ workerName: string; bestDifficulty: number | null }>;
+  workerBests: Array<{ workerName: string; bestDifficulty: number | null; hashrate: number | null }>;
 }
 
 /**
@@ -44,8 +44,8 @@ export function parseKanoWorkersHtml(html: string): KanoParsedStats {
   });
 
   let secondsSinceLastShare: number | null = null;
-  // "Best Ever" is the last (15th) column in the worker table's header order.
-  const workerBests: Array<{ workerName: string; bestDifficulty: number | null }> = [];
+  // "Hash Rate" is the 13th column and "Best Ever" is the last (15th) column in the worker table's header order.
+  const workerBests: Array<{ workerName: string; bestDifficulty: number | null; hashrate: number | null }> = [];
 
   $("#wkt tbody tr").each((_, row) => {
     const cells = $(row).find("td");
@@ -60,8 +60,14 @@ export function parseKanoWorkersHtml(html: string): KanoParsedStats {
     const workerName = cells.eq(0).text().trim();
     const bestEverRaw = cells.eq(14).attr("data-srt");
     const bestDifficulty = bestEverRaw !== undefined ? Number(bestEverRaw) : null;
+    const hashrateRaw = cells.eq(12).attr("data-srt");
+    const hashrate = hashrateRaw !== undefined ? Number(hashrateRaw) : null;
     if (workerName) {
-      workerBests.push({ workerName, bestDifficulty: Number.isNaN(bestDifficulty as number) ? null : bestDifficulty });
+      workerBests.push({
+        workerName,
+        bestDifficulty: Number.isNaN(bestDifficulty as number) ? null : bestDifficulty,
+        hashrate: Number.isNaN(hashrate as number) ? null : hashrate,
+      });
     }
   });
 
