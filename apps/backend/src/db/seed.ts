@@ -63,6 +63,17 @@ async function seedMiningSources() {
           } satisfies SourceSeed,
         ]
       : []),
+    ...(env.TWOMINERS_ZEC_ADDRESS
+      ? [
+          {
+            kind: "2miners",
+            label: "ZEC Solo (2miners)",
+            coin: "ZEC",
+            identifier: env.TWOMINERS_ZEC_ADDRESS,
+            tracksBalance: true,
+          } satisfies SourceSeed,
+        ]
+      : []),
   ];
 
   for (const seed of seeds) {

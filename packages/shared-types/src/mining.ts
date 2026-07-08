@@ -1,5 +1,5 @@
-export type MiningSourceKind = "ckpool" | "kano" | "herominers" | "hashvault";
-export type MiningCoin = "BTC" | "PRL" | "XMR";
+export type MiningSourceKind = "ckpool" | "kano" | "herominers" | "hashvault" | "2miners";
+export type MiningCoin = "BTC" | "PRL" | "XMR" | "ZEC";
 
 export interface MiningSource {
   id: string;

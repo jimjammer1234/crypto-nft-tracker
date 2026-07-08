@@ -11,6 +11,7 @@ const envSchema = z.object({
   HEROMINERS_PRL_ADDRESS: z.string().optional(),
   HEROMINERS_XMR_ADDRESS: z.string().optional(),
   HASHVAULT_XMR_ADDRESS: z.string().optional(),
+  TWOMINERS_ZEC_ADDRESS: z.string().optional(),
 
   OPENSEA_API_KEY: z.string().optional(),
 

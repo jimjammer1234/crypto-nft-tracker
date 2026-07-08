@@ -3,6 +3,7 @@ import type { CkpoolStatsRaw } from "../../integrations/mining/ckpoolClient.js";
 import type { HeroMinersStatsRaw } from "../../integrations/mining/heroMinersClient.js";
 import type { HashvaultStatsRaw, HashvaultWorkersRaw } from "../../integrations/mining/hashvaultClient.js";
 import type { KanoParsedStats } from "../../integrations/mining/kanoClient.js";
+import type { TwoMinersStatsRaw } from "../../integrations/mining/twoMinersClient.js";
 import { parseHashrateString } from "../../utils/hashrate.js";
 
 export function normalizeCkpool(sourceId: string, raw: CkpoolStatsRaw): MiningSnapshot {
@@ -103,5 +104,31 @@ export function normalizeKano(sourceId: string, parsed: KanoParsedStats, polledA
     workerBests: parsed.workerBests,
     // kano.is's HTML worker page has no blocks-found counter for this pool.
     blocksFound: null,
+  };
+}
+
+/**
+ * 2Miners only exposes two hashrate windows (current, and an averaged "hr2") rather than
+ * ckpool's four; hashrate5m/hashrate1d are left null rather than guessed.
+ */
+export function normalizeTwoMiners(sourceId: string, raw: TwoMinersStatsRaw): MiningSnapshot {
+  const workers = Object.entries(raw.workers ?? {});
+
+  return {
+    sourceId,
+    polledAt: new Date().toISOString(),
+    hashrate1m: raw.currentHashrate ?? null,
+    hashrate5m: null,
+    hashrate1hr: raw.hashrate ?? null,
+    hashrate1d: null,
+    workersOnline: raw.workersOnline ?? null,
+    sharesTotal: raw.sharesValid ?? null,
+    // Atomic/smallest-unit balance; per-coin decimal conversion to a display amount happens in the UI layer.
+    balance: raw.stats?.balance ?? null,
+    lastShareAt: raw.stats?.lastShare ? new Date(raw.stats.lastShare * 1000).toISOString() : null,
+    // 2Miners has no "best share ever" concept, but does give named per-worker current hashrate.
+    bestDifficulty: null,
+    workerBests: workers.map(([name, w]) => ({ workerName: name, bestDifficulty: null, hashrate: w.hr ?? null })),
+    blocksFound: raw.stats?.blocksFound ?? null,
   };
 }

@@ -1,14 +1,16 @@
 import { describe, it, expect } from "vitest";
-import { normalizeCkpool, normalizeHeroMiners, normalizeHashvault, normalizeKano } from "../../src/domain/mining/normalize.js";
+import { normalizeCkpool, normalizeHeroMiners, normalizeHashvault, normalizeKano, normalizeTwoMiners } from "../../src/domain/mining/normalize.js";
 import { parseKanoWorkersHtml } from "../../src/integrations/mining/kanoClient.js";
 import type { CkpoolStatsRaw } from "../../src/integrations/mining/ckpoolClient.js";
 import type { HeroMinersStatsRaw } from "../../src/integrations/mining/heroMinersClient.js";
 import type { HashvaultStatsRaw, HashvaultWorkersRaw } from "../../src/integrations/mining/hashvaultClient.js";
+import type { TwoMinersStatsRaw } from "../../src/integrations/mining/twoMinersClient.js";
 import ckpoolFixture from "../integrations/__fixtures__/ckpool-solo.json" with { type: "json" };
 import heroMinersPrlFixture from "../integrations/__fixtures__/herominers-prl.json" with { type: "json" };
 import heroMinersXmrFixture from "../integrations/__fixtures__/herominers-xmr.json" with { type: "json" };
 import hashvaultFixture from "../integrations/__fixtures__/hashvault-xmr.json" with { type: "json" };
 import hashvaultWorkersFixture from "../integrations/__fixtures__/hashvault-workers.json" with { type: "json" };
+import twoMinersFixture from "../integrations/__fixtures__/2miners-zec.json" with { type: "json" };
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -119,5 +121,28 @@ describe("kano.is HTML parsing", () => {
     expect(snapshot.lastShareAt).toBe(polledAt.toISOString());
     expect(snapshot.bestDifficulty).toBe(554199303943);
     expect(snapshot.blocksFound).toBeNull();
+  });
+});
+
+describe("normalizeTwoMiners", () => {
+  it("normalizes a real 2miners solo ZEC response", () => {
+    const snapshot = normalizeTwoMiners("source-zec", twoMinersFixture as TwoMinersStatsRaw);
+    expect(snapshot.hashrate1m).toBe(twoMinersFixture.currentHashrate);
+    expect(snapshot.hashrate1hr).toBe(twoMinersFixture.hashrate);
+    expect(snapshot.hashrate5m).toBeNull();
+    expect(snapshot.hashrate1d).toBeNull();
+    expect(snapshot.workersOnline).toBe(twoMinersFixture.workersOnline);
+    expect(snapshot.balance).toBe(twoMinersFixture.stats.balance);
+    expect(snapshot.blocksFound).toBe(twoMinersFixture.stats.blocksFound);
+    expect(snapshot.lastShareAt).toBe(new Date(twoMinersFixture.stats.lastShare * 1000).toISOString());
+    expect(snapshot.bestDifficulty).toBeNull();
+
+    const workerNames = Object.keys(twoMinersFixture.workers);
+    expect(snapshot.workerBests.length).toBe(workerNames.length);
+    expect(snapshot.workerBests[0]).toEqual({
+      workerName: workerNames[0],
+      bestDifficulty: null,
+      hashrate: twoMinersFixture.workers[workerNames[0] as keyof typeof twoMinersFixture.workers].hr,
+    });
   });
 });
