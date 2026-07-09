@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useAlertStore } from "../state/alertStore.js";
+import { playBlockFoundSound } from "../lib/blockFoundSound.js";
 
 /** Subscribes once to the main process's WS bridge (see preload/index.ts) and feeds live
  * alert.fired events into the alert store. Mining/NFT widgets still poll over REST; this is
@@ -13,6 +14,9 @@ export function useWebSocket() {
     const unsubscribe = window.electronBridge.onWsEvent((event) => {
       if (event.type === "alert.fired") {
         pushAlert(event.data);
+        if (event.data.payload?.kind === "block_found") {
+          playBlockFoundSound();
+        }
       }
     });
 
