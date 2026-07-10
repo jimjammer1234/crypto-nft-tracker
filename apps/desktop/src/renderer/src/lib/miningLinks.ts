@@ -12,7 +12,7 @@ export function miningSourceUrl(source: MiningSourceRow): string {
       return `https://kano.is/index.php?k=work&username=${source.identifier}${apiKey ? `&api=${apiKey}` : ""}`;
     }
     case "herominers":
-      return `https://${HEROMINERS_SUBDOMAIN[source.coin] ?? "www"}.herominers.com/`;
+      return `https://${HEROMINERS_SUBDOMAIN[source.coin] ?? "www"}.herominers.com/#${source.identifier}`;
     case "hashvault":
       return "https://hashvault.pro/monero/dashboard";
     case "2miners":
