@@ -14,7 +14,7 @@ export function miningSourceUrl(source: MiningSourceRow): string {
     case "herominers":
       return `https://${HEROMINERS_SUBDOMAIN[source.coin] ?? "www"}.herominers.com/#${source.identifier}`;
     case "hashvault":
-      return "https://hashvault.pro/monero/dashboard";
+      return `https://hashvault.pro/monero/dashboard?address=${source.identifier}`;
     case "2miners":
       return `https://${TWOMINERS_SUBDOMAIN[source.coin] ?? "solo-zec"}.2miners.com/account/${source.identifier}`;
     default:
