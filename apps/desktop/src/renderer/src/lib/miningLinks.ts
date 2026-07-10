@@ -7,8 +7,10 @@ export function miningSourceUrl(source: MiningSourceRow): string {
   switch (source.kind) {
     case "ckpool":
       return `https://solo.ckpool.org/users/${source.identifier}`;
-    case "kano":
-      return `https://kano.is/index.php?k=work&username=${source.identifier}`;
+    case "kano": {
+      const apiKey = source.endpointMeta?.apiKey;
+      return `https://kano.is/index.php?k=work&username=${source.identifier}${apiKey ? `&api=${apiKey}` : ""}`;
+    }
     case "herominers":
       return `https://${HEROMINERS_SUBDOMAIN[source.coin] ?? "www"}.herominers.com/`;
     case "hashvault":

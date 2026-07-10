@@ -33,6 +33,7 @@ export interface MiningSourceRow {
   coin: string;
   identifier: string;
   enabled: boolean;
+  endpointMeta: { apiKey?: string } | null;
 }
 
 export interface MiningSnapshotRow {
