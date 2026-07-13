@@ -24,7 +24,9 @@ export function MiningWidget({ source }: { source: MiningSourceRow }) {
     .reverse()
     .map((s) => ({ x: s.polledAt, y: Number(s.hashrate1hr ?? s.hashrate1m ?? 0) }));
 
-  const workerBests = latest?.workerBests ?? [];
+  const workerBests = [...(latest?.workerBests ?? [])].sort(
+    (a, b) => (b.bestDifficulty ?? -1) - (a.bestDifficulty ?? -1)
+  );
 
   return (
     <Card
