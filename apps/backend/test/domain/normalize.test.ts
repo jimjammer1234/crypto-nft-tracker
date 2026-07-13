@@ -1,16 +1,18 @@
 import { describe, it, expect } from "vitest";
-import { normalizeCkpool, normalizeHeroMiners, normalizeHashvault, normalizeKano, normalizeTwoMiners } from "../../src/domain/mining/normalize.js";
+import { normalizeCkpool, normalizeHeroMiners, normalizeHashvault, normalizeKano, normalizeTwoMiners, normalizeParasite } from "../../src/domain/mining/normalize.js";
 import { parseKanoWorkersHtml } from "../../src/integrations/mining/kanoClient.js";
 import type { CkpoolStatsRaw } from "../../src/integrations/mining/ckpoolClient.js";
 import type { HeroMinersStatsRaw } from "../../src/integrations/mining/heroMinersClient.js";
 import type { HashvaultStatsRaw, HashvaultWorkersRaw } from "../../src/integrations/mining/hashvaultClient.js";
 import type { TwoMinersStatsRaw } from "../../src/integrations/mining/twoMinersClient.js";
+import type { ParasiteStatsRaw } from "../../src/integrations/mining/parasiteClient.js";
 import ckpoolFixture from "../integrations/__fixtures__/ckpool-solo.json" with { type: "json" };
 import heroMinersPrlFixture from "../integrations/__fixtures__/herominers-prl.json" with { type: "json" };
 import heroMinersXmrFixture from "../integrations/__fixtures__/herominers-xmr.json" with { type: "json" };
 import hashvaultFixture from "../integrations/__fixtures__/hashvault-xmr.json" with { type: "json" };
 import hashvaultWorkersFixture from "../integrations/__fixtures__/hashvault-workers.json" with { type: "json" };
 import twoMinersFixture from "../integrations/__fixtures__/2miners-zec.json" with { type: "json" };
+import parasiteFixture from "../integrations/__fixtures__/parasite-btc.json" with { type: "json" };
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -143,6 +145,30 @@ describe("normalizeTwoMiners", () => {
       workerName: workerNames[0],
       bestDifficulty: null,
       hashrate: twoMinersFixture.workers[workerNames[0] as keyof typeof twoMinersFixture.workers].hr,
+    });
+  });
+});
+
+describe("normalizeParasite", () => {
+  it("normalizes a real parasite.space solo BTC response", () => {
+    const snapshot = normalizeParasite("source-parasite", parasiteFixture as ParasiteStatsRaw);
+    expect(snapshot.hashrate1m).toBe(parasiteFixture.hashrate);
+    expect(snapshot.hashrate5m).toBeNull();
+    expect(snapshot.hashrate1hr).toBeNull();
+    expect(snapshot.workersOnline).toBe(parasiteFixture.workers);
+    expect(snapshot.sharesTotal).toBeNull();
+    expect(snapshot.balance).toBeNull();
+    expect(snapshot.blocksFound).toBeNull();
+    // "1.13T" parsed via the shared hashrate-suffix parser.
+    expect(snapshot.bestDifficulty).toBeCloseTo(1.13e12, -9);
+    // Freshest worker lastSubmission (1783952372) rather than the human "1m ago" top-level field.
+    expect(snapshot.lastShareAt).toBe(new Date(1783952372 * 1000).toISOString());
+
+    expect(snapshot.workerBests.length).toBe(parasiteFixture.workerData.length);
+    expect(snapshot.workerBests[0]).toEqual({
+      workerName: parasiteFixture.workerData[0].name,
+      bestDifficulty: Number(parasiteFixture.workerData[0].bestDifficulty),
+      hashrate: Number(parasiteFixture.workerData[0].hashrate),
     });
   });
 });

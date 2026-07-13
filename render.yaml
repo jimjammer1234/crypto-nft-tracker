@@ -31,3 +31,5 @@ services:
         value: 48Pvv5d3qz6jP5vgCCMqknidYq7pCi6G8eEP3ynTgif2N9YXbZ2Fsoa2bzEgFm6PpaAaaacJxinepZpzjutryyNoHzFgGLY
       - key: TWOMINERS_ZEC_ADDRESS
         value: t1VwKGmWM3Vu66BXw1wGaGeB19ygfbdzoiz
+      - key: PARASITE_BTC_ADDRESS
+        value: bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u

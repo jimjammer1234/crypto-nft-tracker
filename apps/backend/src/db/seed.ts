@@ -74,6 +74,17 @@ async function seedMiningSources() {
           } satisfies SourceSeed,
         ]
       : []),
+    ...(env.PARASITE_BTC_ADDRESS
+      ? [
+          {
+            kind: "parasite",
+            label: "BTC Solo (parasite.space)",
+            coin: "BTC",
+            identifier: env.PARASITE_BTC_ADDRESS,
+            tracksBalance: false,
+          } satisfies SourceSeed,
+        ]
+      : []),
   ];
 
   for (const seed of seeds) {

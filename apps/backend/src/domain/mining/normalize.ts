@@ -4,6 +4,7 @@ import type { HeroMinersStatsRaw } from "../../integrations/mining/heroMinersCli
 import type { HashvaultStatsRaw, HashvaultWorkersRaw } from "../../integrations/mining/hashvaultClient.js";
 import type { KanoParsedStats } from "../../integrations/mining/kanoClient.js";
 import type { TwoMinersStatsRaw } from "../../integrations/mining/twoMinersClient.js";
+import type { ParasiteStatsRaw } from "../../integrations/mining/parasiteClient.js";
 import { parseHashrateString } from "../../utils/hashrate.js";
 
 export function normalizeCkpool(sourceId: string, raw: CkpoolStatsRaw): MiningSnapshot {
@@ -130,5 +131,43 @@ export function normalizeTwoMiners(sourceId: string, raw: TwoMinersStatsRaw): Mi
     bestDifficulty: null,
     workerBests: workers.map(([name, w]) => ({ workerName: name, bestDifficulty: null, hashrate: w.hr ?? null })),
     blocksFound: raw.stats?.blocksFound ?? null,
+  };
+}
+
+/**
+ * parasite.space is a solo BTC pool. Its account-level bestDifficulty is an abbreviated string
+ * (e.g. "1.13T"), reused via the same K/M/G/T/P suffix parser as hashrate strings, while
+ * per-worker bestDifficulty/hashrate/lastSubmission come through as plain numeric strings.
+ * lastShareAt uses the freshest worker lastSubmission rather than the human "1m ago" top-level field.
+ */
+export function normalizeParasite(sourceId: string, raw: ParasiteStatsRaw): MiningSnapshot {
+  const workers = raw.workerData ?? [];
+  const latestSubmission = workers.reduce<number | null>((latest, w) => {
+    const t = Number(w.lastSubmission);
+    if (!Number.isFinite(t) || t === 0) return latest;
+    return latest === null ? t : Math.max(latest, t);
+  }, null);
+
+  return {
+    sourceId,
+    polledAt: new Date().toISOString(),
+    hashrate1m: raw.hashrate ?? null,
+    hashrate5m: null,
+    hashrate1hr: null,
+    hashrate1d: null,
+    workersOnline: raw.workers ?? null,
+    // parasite.space's account API doesn't report a share count.
+    sharesTotal: null,
+    // Solo BTC pools pay out per found block rather than tracking a running balance.
+    balance: null,
+    lastShareAt: latestSubmission ? new Date(latestSubmission * 1000).toISOString() : null,
+    bestDifficulty: parseHashrateString(raw.bestDifficulty),
+    workerBests: workers.map((w) => ({
+      workerName: w.name,
+      bestDifficulty: w.bestDifficulty ? Number(w.bestDifficulty) : null,
+      hashrate: w.hashrate ? Number(w.hashrate) : null,
+    })),
+    // parasite.space's account API doesn't report a blocks-found counter.
+    blocksFound: null,
   };
 }

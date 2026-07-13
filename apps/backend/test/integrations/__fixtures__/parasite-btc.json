@@ -1,0 +1,65 @@
+{
+  "hashrate": 68780000000000,
+  "workers": 4,
+  "lastSubmission": "1m ago",
+  "bestDifficulty": "1.13T",
+  "uptime": "392d 22h",
+  "workerData": [
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.basement",
+      "name": "basement",
+      "hashrate": "14700000000000",
+      "bestDifficulty": "5890843576",
+      "lastSubmission": "1783952372",
+      "uptime": "N/A"
+    },
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.solojammer2.8d6ba4b2",
+      "name": "solojammer2",
+      "hashrate": "0",
+      "bestDifficulty": "17021664903",
+      "lastSubmission": "1777276963",
+      "uptime": "N/A"
+    },
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.cypher.garage",
+      "name": "cypher",
+      "hashrate": "49500000000000",
+      "bestDifficulty": "372341485974",
+      "lastSubmission": "1783952372",
+      "uptime": "N/A"
+    },
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.KeyMaker",
+      "name": "KeyMaker",
+      "hashrate": "0",
+      "bestDifficulty": "472684009",
+      "lastSubmission": "1772992753",
+      "uptime": "N/A"
+    },
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.solojammer.8d6ba4b2e",
+      "name": "solojammer",
+      "hashrate": "0",
+      "bestDifficulty": "469984394",
+      "lastSubmission": "1777276958",
+      "uptime": "N/A"
+    },
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.SWTICH",
+      "name": "SWTICH",
+      "hashrate": "0",
+      "bestDifficulty": "437903768807",
+      "lastSubmission": "1780581657",
+      "uptime": "N/A"
+    },
+    {
+      "id": "bc1qrzmzdce68mu52ufcf5naykrq5nfz4p3q3cpm3u.AXE_RPM",
+      "name": "AXE_RPM",
+      "hashrate": "4580000000000",
+      "bestDifficulty": "7395073289",
+      "lastSubmission": "1783952357",
+      "uptime": "N/A"
+    }
+  ]
+}

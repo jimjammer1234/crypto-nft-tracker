@@ -17,6 +17,8 @@ export function miningSourceUrl(source: MiningSourceRow): string {
       return `https://hashvault.pro/monero/dashboard?address=${source.identifier}`;
     case "2miners":
       return `https://${TWOMINERS_SUBDOMAIN[source.coin] ?? "solo-zec"}.2miners.com/account/${source.identifier}`;
+    case "parasite":
+      return `https://parasite.space/user/${source.identifier}`;
     default:
       return "https://kano.is/";
   }

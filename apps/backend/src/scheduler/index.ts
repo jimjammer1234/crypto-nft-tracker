@@ -4,6 +4,7 @@ import { pollHeroMiners } from "./jobs/pollHeroMiners.js";
 import { pollHashvault } from "./jobs/pollHashvault.js";
 import { pollKano } from "./jobs/pollKano.js";
 import { pollTwoMiners } from "./jobs/pollTwoMiners.js";
+import { pollParasite } from "./jobs/pollParasite.js";
 import { pollOpenSeaCollections, pollOpenSeaListings } from "./jobs/pollOpenSeaCollections.js";
 import { pollWalletPortfolios } from "./jobs/pollWalletPortfolios.js";
 import { pruneOldShareEvents } from "../domain/mining/liveHashrate.js";
@@ -19,6 +20,7 @@ export function startScheduler(notifiers: Notifiers) {
     () => pollHashvault(notifiers),
     () => pollKano(notifiers),
     () => pollTwoMiners("ZEC", notifiers),
+    () => pollParasite(notifiers),
   ];
   const nftFastJobs = [() => pollOpenSeaCollections(notifiers), () => pollOpenSeaListings(notifiers)];
   const nftSlowJobs = [() => pollWalletPortfolios(notifiers)];
