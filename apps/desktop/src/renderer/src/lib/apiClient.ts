@@ -34,6 +34,7 @@ export interface MiningSourceRow {
   identifier: string;
   enabled: boolean;
   endpointMeta: { apiKey?: string } | null;
+  latestBestDifficulty: number | null;
 }
 
 export interface MiningSnapshotRow {
